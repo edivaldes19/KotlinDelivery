@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin_default"
+    android:backgroundTint="@color/gray_200"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/margin_max">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_default"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgRole"
+            android:layout_width="@dimen/role_image_size"
+            android:layout_height="@dimen/role_image_size"
+            android:layout_margin="@dimen/margin_ultra_min"
+            android:src="@mipmap/ic_launcher"
+            app:shapeAppearance="@style/ImageWithRoundedEdges" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_ultra_min"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            tools:text="ROLE" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

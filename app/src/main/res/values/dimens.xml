@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_min">8dp</dimen>
+    <dimen name="margin_ultra_min">4dp</dimen>
+    <dimen name="margin_max">24dp</dimen>
+    <dimen name="role_image_size">100dp</dimen>
+    <dimen name="profile_image_size">125dp</dimen>
+    <dimen name="profile_view_height">175dp</dimen>
+    <dimen name="category_image_size_width">250dp</dimen>
+    <dimen name="category_image_size_height">200dp</dimen>
+</resources>

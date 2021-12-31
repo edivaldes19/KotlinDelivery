@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorOnPrimary">@color/white</color>
+    <color name="colorOnSecondary">@color/black</color>
+    <color name="green_a700">#00c853</color>
+    <color name="green_a700_dark">#009624</color>
+    <color name="green_a700_light">#5efc82</color>
+    <color name="red_a700">#d50000</color>
+    <color name="red_a700_dark">#9b0000</color>
+    <color name="red_a700_light">#ff5131</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="gray_200">#eeeeee</color>
+</resources>

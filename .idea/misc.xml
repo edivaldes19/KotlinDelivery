@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_big.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_medium.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_baseline_person.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_broken_image.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_cloud_download.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_contact_phone.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_email.xml" value="0.12407407407407407" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_family_restroom.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_food_bank.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_image_search.xml" value="0.24259259259259258" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_keyboard_arrow_left.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_keyboard_arrow_right.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_logout.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_password.xml" value="0.12407407407407407" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_person.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_playlist_add.xml" value="0.24351851851851852" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_playlist_add_check.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/splash_screen.xml" value="0.12407407407407407" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_home.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_delivery_home.xml" value="0.2" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_restaurant_home.xml" value="0.264" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_save_image.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_select_role.xml" value="0.16" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_categories.xml" value="0.11196911196911197" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_orders.xml" value="0.11196911196911197" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_profile.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_delivery_orders.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_delivery_profile.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_categories.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_food.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_orders.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_profile.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_role.xml" value="0.2" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_client.xml" value="0.2" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_delivery.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_restaurant.xml" value="0.23387096774193547" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2526041666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
