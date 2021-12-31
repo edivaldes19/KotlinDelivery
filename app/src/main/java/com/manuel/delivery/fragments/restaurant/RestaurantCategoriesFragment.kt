@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.manuel.delivery.R
 import com.manuel.delivery.databinding.FragmentRestaurantCategoriesBinding
 import com.manuel.delivery.models.Category
@@ -18,7 +19,6 @@ import com.manuel.delivery.models.ResponseHttp
 import com.manuel.delivery.models.User
 import com.manuel.delivery.providers.CategoriesProvider
 import com.manuel.delivery.utils.Constants
-import com.manuel.delivery.utils.MySharedPreferences
 import com.manuel.delivery.utils.TextWatchers
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,8 +66,16 @@ class RestaurantCategoriesFragment : Fragment() {
     ): View? {
         binding = FragmentRestaurantCategoriesBinding.inflate(inflater, container, false)
         binding?.let { view ->
-            getUserInSession()
+            user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(requireContext(), view.btnAddCategory, view.etName)
+            view.toolbar.title = getString(R.string.add_category)
+            view.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorOnPrimary
+                )
+            )
+            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
             return view.root
         }
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -83,6 +91,7 @@ class RestaurantCategoriesFragment : Fragment() {
                         .createIntent { intent -> resultLauncher.launch(intent) }
                 }
                 b.btnAddCategory.setOnClickListener {
+                    b.btnAddCategory.isEnabled = false
                     val category = Category(name = b.etName.text.toString().trim())
                     file?.let { f ->
                         categoriesProvider.create(f, category)
@@ -93,9 +102,13 @@ class RestaurantCategoriesFragment : Fragment() {
                                 ) {
                                     response.body()?.let { responseHttp ->
                                         if (responseHttp.isSuccess) {
-                                            b.etName.setText(" ")
+                                            with(b.etName) {
+                                                text?.clear()
+                                                error = null
+                                            }
                                             b.imgCategory.setImageResource(R.drawable.ic_image_search)
                                             file = null
+                                            b.btnAddCategory.isEnabled = true
                                             Toast.makeText(
                                                 requireContext(),
                                                 responseHttp.message,
@@ -106,6 +119,7 @@ class RestaurantCategoriesFragment : Fragment() {
                                 }
 
                                 override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                                    b.btnAddCategory.isEnabled = true
                                     Snackbar.make(
                                         b.root,
                                         getString(R.string.error_adding_category),
@@ -115,6 +129,7 @@ class RestaurantCategoriesFragment : Fragment() {
                             })
                     }
                     if (file == null) {
+                        b.btnAddCategory.isEnabled = true
                         Snackbar.make(
                             b.root,
                             getString(R.string.you_must_capture_or_select_an_image),
@@ -129,13 +144,5 @@ class RestaurantCategoriesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    private fun getUserInSession() {
-        val mySharedPreferences = MySharedPreferences(requireContext())
-        if (!mySharedPreferences.getData(Constants.PROP_USER).isNullOrEmpty()) {
-            user =
-                Gson().fromJson(mySharedPreferences.getData(Constants.PROP_USER), User::class.java)
-        }
     }
 }

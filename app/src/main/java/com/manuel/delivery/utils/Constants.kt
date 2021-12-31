@@ -1,6 +1,21 @@
 package com.manuel.delivery.utils
 
+import android.content.Context
+import com.google.gson.Gson
+import com.manuel.delivery.models.User
+
 object Constants {
+    fun getUserInSession(context: Context): User? {
+        val mySharedPreferences = MySharedPreferences(context)
+        if (!mySharedPreferences.getData(PROP_USER).isNullOrEmpty()) {
+            return Gson().fromJson(
+                mySharedPreferences.getData(PROP_USER),
+                User::class.java
+            )
+        }
+        return null
+    }
+
     const val API_URL = "http://192.168.0.13:3000/api/"
     const val PARAM_CLIENT = "CLIENTE"
     const val PARAM_DELIVERY = "REPARTIDOR"
@@ -10,6 +25,7 @@ object Constants {
     const val ROUTE_USERS_UPDATE = "users/update"
     const val ROUTE_USERS_UPDATE_WITHOUT_IMAGE = "users/updateWithoutImage"
     const val ROUTE_CATEGORIES_CREATE = "categories/create"
+    const val ROUTE_CATEGORIES_GET_ALL = "categories/getAll"
     const val PROP_ID = "id"
     const val PROP_EMAIL = "email"
     const val PROP_NAME = "name"

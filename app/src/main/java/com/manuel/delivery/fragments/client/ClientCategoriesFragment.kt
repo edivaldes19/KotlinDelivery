@@ -1,60 +1,86 @@
 package com.manuel.delivery.fragments.client
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.manuel.delivery.R
+import com.manuel.delivery.adapters.CategoriesAdapter
+import com.manuel.delivery.databinding.FragmentClientCategoriesBinding
+import com.manuel.delivery.models.Category
+import com.manuel.delivery.models.User
+import com.manuel.delivery.providers.CategoriesProvider
+import com.manuel.delivery.utils.Constants
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ClientCategoriesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ClientCategoriesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var categoriesProvider: CategoriesProvider
+    private lateinit var categoriesAdapter: CategoriesAdapter
+    private var binding: FragmentClientCategoriesBinding? = null
+    private var user: User? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentClientCategoriesBinding.inflate(inflater, container, false)
+        binding?.let { view ->
+            user = Constants.getUserInSession(requireContext())
+            view.toolbar.title = getString(R.string.categories)
+            view.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorOnPrimary
+                )
+            )
+            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
+            return view.root
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.let { b ->
+            user?.let { u ->
+                categoriesProvider = CategoriesProvider(u.sessionToken)
+                categoriesProvider.getAll()?.enqueue(object : Callback<MutableList<Category>> {
+                    override fun onResponse(
+                        call: Call<MutableList<Category>>,
+                        response: Response<MutableList<Category>>
+                    ) {
+                        response.body()?.let { listOfCategories ->
+                            categoriesAdapter =
+                                CategoriesAdapter(requireContext(), listOfCategories)
+                            b.rvCategories.apply {
+                                layoutManager = LinearLayoutManager(requireContext())
+                                adapter = this@ClientCategoriesFragment.categoriesAdapter
+                                setHasFixedSize(true)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MutableList<Category>>, t: Throwable) {
+                        Snackbar.make(
+                            b.root,
+                            getString(R.string.failed_to_get_all_categories),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_categories, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ClientCategoriesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ClientCategoriesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

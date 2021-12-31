@@ -19,6 +19,7 @@ class CategoriesProvider(private val token: String? = null) {
         categoriesRoutes = token?.let { t -> api.getCategoriesRoutesWithToken(t) }
     }
 
+    fun getAll(): Call<MutableList<Category>>? = token?.let { t -> categoriesRoutes?.getAll(t) }
     fun create(file: File, category: Category): Call<ResponseHttp>? {
         val body = RequestBody.create(MediaType.parse(Constants.PROP_IMAGE_CREATE), file)
         val image = MultipartBody.Part.createFormData(Constants.PROP_IMAGE, file.name, body)

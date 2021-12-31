@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -69,7 +71,7 @@ class ClientProfileFragment : Fragment() {
     ): View? {
         binding = FragmentClientProfileBinding.inflate(inflater, container, false)
         binding?.let { view ->
-            getUserInSession()
+            user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(
                 requireContext(),
                 view.btnEditProfile,
@@ -78,6 +80,14 @@ class ClientProfileFragment : Fragment() {
                 view.etSurnames,
                 view.etPhone
             )
+            view.toolbar.title = getString(R.string.profile)
+            view.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorOnPrimary
+                )
+            )
+            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
             return view.root
         }
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -106,15 +116,12 @@ class ClientProfileFragment : Fragment() {
                         .createIntent { intent -> resultLauncher.launch(intent) }
                 }
                 b.btnChangeRole.setOnClickListener {
-                    startActivity(
-                        Intent(
-                            requireContext(),
-                            SelectRoleActivity::class.java
-                        ).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        })
+                    startActivity(Intent(requireContext(), SelectRoleActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    })
                 }
                 b.btnEditProfile.setOnClickListener {
+                    b.btnEditProfile.isEnabled = false
                     u.apply {
                         name = b.etName.text.toString().trim()
                         lastname = b.etSurnames.text.toString().trim()
@@ -130,6 +137,7 @@ class ClientProfileFragment : Fragment() {
                                     response.body()?.let { responseHttp ->
                                         if (responseHttp.isSuccess) {
                                             saveUserSession(responseHttp.data.toString())
+                                            b.btnEditProfile.isEnabled = true
                                             Toast.makeText(
                                                 requireContext(),
                                                 responseHttp.message,
@@ -140,6 +148,7 @@ class ClientProfileFragment : Fragment() {
                                 }
 
                                 override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                                    b.btnEditProfile.isEnabled = true
                                     Snackbar.make(
                                         b.root,
                                         getString(R.string.failed_to_update_user_information),
@@ -156,6 +165,7 @@ class ClientProfileFragment : Fragment() {
                             response.body()?.let { responseHttp ->
                                 if (responseHttp.isSuccess) {
                                     saveUserSession(responseHttp.data.toString())
+                                    b.btnEditProfile.isEnabled = true
                                     Toast.makeText(
                                         requireContext(),
                                         responseHttp.message,
@@ -166,6 +176,7 @@ class ClientProfileFragment : Fragment() {
                         }
 
                         override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                            b.btnEditProfile.isEnabled = true
                             Snackbar.make(
                                 b.root,
                                 getString(R.string.failed_to_update_user_information),
@@ -187,13 +198,5 @@ class ClientProfileFragment : Fragment() {
         val mySharedPreferences = MySharedPreferences(requireContext())
         val user = Gson().fromJson(data, User::class.java)
         mySharedPreferences.saveData(Constants.PROP_USER, user)
-    }
-
-    private fun getUserInSession() {
-        val mySharedPreferences = MySharedPreferences(requireContext())
-        if (!mySharedPreferences.getData(Constants.PROP_USER).isNullOrEmpty()) {
-            user =
-                Gson().fromJson(mySharedPreferences.getData(Constants.PROP_USER), User::class.java)
-        }
     }
 }

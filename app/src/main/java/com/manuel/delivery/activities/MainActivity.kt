@@ -2,6 +2,8 @@ package com.manuel.delivery.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +26,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var usersProvider = UsersProvider()
+    private var isPressed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_Delivery)
@@ -89,7 +92,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finishAffinity()
+        if (isPressed) {
+            finishAffinity()
+        } else {
+            isPressed = true
+            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
+        }
+        val runnable = Runnable { isPressed = false }
+        Handler(Looper.getMainLooper()).postDelayed(runnable, 2000)
     }
 
     private fun getUserInSession() {

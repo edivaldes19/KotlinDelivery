@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.manuel.delivery.R
@@ -27,6 +28,7 @@ class RolesAdapter(private var context: Context, private val listOfRoles: Mutabl
 
     override fun onBindViewHolder(holder: RolesViewHolder, position: Int) {
         val role = listOfRoles[position]
+        holder.binding.root.animation = AnimationUtils.loadAnimation(context, R.anim.slide)
         holder.binding.tvRole.text = role.roleName
         Glide.with(context).load(role.image).placeholder(R.drawable.ic_cloud_download)
             .error(R.drawable.ic_broken_image).into(holder.binding.imgRole)

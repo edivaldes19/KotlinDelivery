@@ -6,12 +6,12 @@
         android:title="@string/orders" />
     <item
         android:id="@+id/item_categories_restaurant"
-        android:icon="@drawable/ic_playlist_add"
+        android:icon="@drawable/ic_restaurant_menu"
         android:title="@string/add_category" />
     <item
         android:id="@+id/item_food_restaurant"
         android:icon="@drawable/ic_fast_food"
-        android:title="@string/food" />
+        android:title="@string/add_product" />
     <item
         android:id="@+id/item_profile_restaurant"
         android:icon="@drawable/ic_person"

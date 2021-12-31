@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.client.ClientProfileFragment">
+    tools:context=".fragments.restaurant.RestaurantProductFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/green_a700"
-        app:layout_constraintBottom_toTopOf="@id/nsvClientProfile"
+        app:layout_constraintBottom_toTopOf="@id/nsvRestaurantProduct"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsvClientProfile"
+        android:id="@+id/nsvRestaurantProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -38,38 +38,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <LinearLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_default"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:fillViewport="true">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="@dimen/profile_image_size"
-                    android:layout_height="@dimen/profile_image_size"
-                    android:layout_margin="@dimen/margin_default"
-                    android:background="?attr/selectableItemBackground"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_person"
-                    app:shapeAppearance="@style/ImageWithRoundedEdges" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLogout"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_default"
-                    android:text="@string/logout"
-                    android:textAllCaps="false"
-                    android:textColor="@color/red_a700"
-                    app:cornerRadius="@dimen/margin_max"
-                    app:icon="@drawable/ic_logout"
-                    app:iconGravity="end"
-                    app:iconTint="@color/red_a700"
-                    app:strokeColor="@color/red_a700" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgProduct1"
+                        android:layout_width="@dimen/product_image_size"
+                        android:layout_height="@dimen/product_image_size"
+                        android:layout_margin="@dimen/margin_min"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_image_search"
+                        app:shapeAppearance="@style/ImageWithEdgesRoundedInHalf" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgProduct2"
+                        android:layout_width="@dimen/product_image_size"
+                        android:layout_height="@dimen/product_image_size"
+                        android:layout_margin="@dimen/margin_min"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_image_search"
+                        app:shapeAppearance="@style/ImageWithEdgesRoundedInHalf" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgProduct3"
+                        android:layout_width="@dimen/product_image_size"
+                        android:layout_height="@dimen/product_image_size"
+                        android:layout_margin="@dimen/margin_min"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_image_search"
+                        app:shapeAppearance="@style/ImageWithEdgesRoundedInHalf" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -79,43 +87,19 @@
                 android:layout_marginTop="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginBottom="@dimen/margin_min"
-                android:enabled="false"
-                android:hint="@string/email"
-                app:counterEnabled="true"
-                app:counterMaxLength="50"
-                app:helperText="@string/read_only_field"
-                app:helperTextEnabled="true"
-                app:startIconDrawable="@drawable/ic_email">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:inputType="textEmailAddress"
-                    android:maxLength="50" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_default"
-                android:layout_marginEnd="@dimen/margin_default"
-                android:layout_marginBottom="@dimen/margin_min"
-                android:hint="@string/name"
+                android:hint="@string/product_name"
                 app:counterEnabled="true"
                 app:counterMaxLength="25"
-                app:startIconDrawable="@drawable/ic_person">
+                app:startIconDrawable="@drawable/ic_drive_file_rename_outline">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapWords|textPersonName"
+                    android:inputType="textCapSentences"
                     android:maxLength="25"
-                    android:nextFocusForward="@id/etSurnames" />
+                    android:nextFocusForward="@id/etDescription" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -125,19 +109,19 @@
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginBottom="@dimen/margin_min"
-                android:hint="@string/surnames"
+                android:hint="@string/description"
                 app:counterEnabled="true"
-                app:counterMaxLength="25"
-                app:startIconDrawable="@drawable/ic_family_restroom">
+                app:counterMaxLength="100"
+                app:startIconDrawable="@drawable/ic_description">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSurnames"
+                    android:id="@+id/etDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapWords|textPersonName"
-                    android:maxLength="25"
-                    android:nextFocusForward="@id/etPhone" />
+                    android:inputType="textCapSentences"
+                    android:maxLength="100"
+                    android:nextFocusForward="@id/etPrice" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -147,44 +131,45 @@
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginBottom="@dimen/margin_min"
-                android:hint="@string/phone"
+                android:hint="@string/price"
                 app:counterEnabled="true"
                 app:counterMaxLength="10"
-                app:startIconDrawable="@drawable/ic_contact_phone">
+                app:startIconDrawable="@drawable/ic_attach_money"
+                app:suffixText="MXN">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone"
+                    android:id="@+id/etPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="0123456789"
-                    android:inputType="phone"
+                    android:digits=".0123456789"
+                    android:inputType="numberDecimal"
                     android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnChangeRole"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
-                android:layout_marginBottom="@dimen/margin_ultra_min"
-                android:text="@string/change_role"
-                android:textAllCaps="false"
-                app:cornerRadius="@dimen/margin_max"
-                app:strokeColor="@color/green_a700" />
+                android:layout_marginBottom="@dimen/margin_min"
+                android:hint="@string/category"
+                app:startIconDrawable="@drawable/ic_food_bank">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/atvCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEditProfile"
+                android:id="@+id/btnAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_ultra_min"
-                android:layout_marginEnd="@dimen/margin_default"
-                android:layout_marginBottom="@dimen/margin_default"
+                android:layout_margin="@dimen/margin_default"
                 android:enabled="false"
-                android:text="@string/edit_profile"
+                android:text="@string/add_product"
                 android:textAllCaps="false"
                 app:cornerRadius="@dimen/margin_max" />
         </LinearLayout>

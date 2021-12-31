@@ -8,7 +8,6 @@
     android:layout_margin="@dimen/margin_default"
     android:backgroundTint="@color/gray_200"
     android:elevation="@dimen/cardview_default_elevation"
-    android:orientation="vertical"
     app:cardCornerRadius="@dimen/margin_max">
 
     <LinearLayout

@@ -3,6 +3,8 @@ package com.manuel.delivery.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,7 @@ class SaveImageActivity : AppCompatActivity() {
     private lateinit var usersProvider: UsersProvider
     private var user: User? = null
     private var file: File? = null
+    private var isPressed = false
     private val imageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             val resultCode = activityResult.resultCode
@@ -54,7 +57,7 @@ class SaveImageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUserInSession()
+        user = Constants.getUserInSession(this)
         binding = ActivitySaveImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         usersProvider = UsersProvider(user?.sessionToken)
@@ -97,12 +100,16 @@ class SaveImageActivity : AppCompatActivity() {
         binding.btnSkip.setOnClickListener { goToClientHome() }
     }
 
-    private fun getUserInSession() {
-        val mySharedPreferences = MySharedPreferences(this)
-        if (!mySharedPreferences.getData(Constants.PROP_USER).isNullOrEmpty()) {
-            user =
-                Gson().fromJson(mySharedPreferences.getData(Constants.PROP_USER), User::class.java)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (isPressed) {
+            finishAffinity()
+        } else {
+            isPressed = true
+            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
         }
+        val runnable = Runnable { isPressed = false }
+        Handler(Looper.getMainLooper()).postDelayed(runnable, 2000)
     }
 
     private fun saveUserSession(data: String) {
