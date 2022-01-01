@@ -102,13 +102,12 @@ class RestaurantCategoriesFragment : Fragment() {
                                 ) {
                                     response.body()?.let { responseHttp ->
                                         if (responseHttp.isSuccess) {
-                                            with(b.etName) {
-                                                text?.clear()
-                                                error = null
-                                            }
-                                            b.imgCategory.setImageResource(R.drawable.ic_image_search)
                                             file = null
-                                            b.btnAddCategory.isEnabled = true
+                                            with(b) {
+                                                TextWatchers.clearAllTextFields(etName)
+                                                b.imgCategory.setImageResource(R.drawable.ic_image_search)
+                                                btnAddCategory.isEnabled = true
+                                            }
                                             Toast.makeText(
                                                 requireContext(),
                                                 responseHttp.message,

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/background_product_price.xml" value="0.11296296296296296" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_big.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_medium.xml" value="0.1" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/splash_screen.xml" value="0.12407407407407407" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/action_bar.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_home.xml" value="0.19907407407407407" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_products_list.xml" value="0.11018518518518519" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_delivery_home.xml" value="0.2" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_main.xml" value="0.16" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_register.xml" value="0.2" />
@@ -39,9 +41,10 @@
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_categories.xml" value="0.19907407407407407" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_food.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_orders.xml" value="0.1" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_product.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_product.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_profile.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_category.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_product.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_role.xml" value="0.2" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_client.xml" value="0.2" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_delivery.xml" value="0.24010416666666667" />

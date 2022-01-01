@@ -22,7 +22,6 @@
             android:layout_width="@dimen/role_image_size"
             android:layout_height="@dimen/role_image_size"
             android:layout_margin="@dimen/margin_ultra_min"
-            android:src="@mipmap/ic_launcher"
             app:shapeAppearance="@style/ImageWithRoundedEdges" />
 
         <com.google.android.material.textview.MaterialTextView

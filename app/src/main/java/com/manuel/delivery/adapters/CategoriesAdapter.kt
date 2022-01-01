@@ -1,6 +1,7 @@
 package com.manuel.delivery.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,10 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.manuel.delivery.R
+import com.manuel.delivery.activities.client.products.list.ClientProductsListActivity
 import com.manuel.delivery.databinding.ItemCategoryBinding
 import com.manuel.delivery.models.Category
+import com.manuel.delivery.utils.Constants
 
 class CategoriesAdapter(
     private var context: Context,
@@ -29,6 +32,11 @@ class CategoriesAdapter(
         holder.binding.tvCategory.text = category.name
         Glide.with(context).load(category.image).placeholder(R.drawable.ic_cloud_download)
             .error(R.drawable.ic_broken_image).into(holder.binding.imgCategory)
+        holder.binding.root.setOnClickListener {
+            context.startActivity(Intent(context, ClientProductsListActivity::class.java).apply {
+                putExtra(Constants.PROP_ID_CATEGORY, category.id)
+            })
+        }
     }
 
     override fun getItemCount(): Int = listOfCategories.size

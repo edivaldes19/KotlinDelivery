@@ -48,6 +48,13 @@ class TextWatchers {
             }
         }
 
+        fun clearAllTextFields(vararg textInputEditText: TextInputEditText) {
+            textInputEditText.forEach { editText ->
+                editText.text?.clear()
+                editText.error = null
+            }
+        }
+
         fun isEmailValid(email: String): Boolean =
             email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }

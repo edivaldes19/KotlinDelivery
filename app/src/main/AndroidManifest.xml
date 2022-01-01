@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
+            android:name=".activities.client.products.list.ClientProductsListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SaveImageActivity"
             android:exported="false" />
         <activity
@@ -52,8 +55,10 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,8 +17,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.manuel.delivery.R
 import com.manuel.delivery.databinding.FragmentRestaurantProductBinding
 import com.manuel.delivery.models.Category
+import com.manuel.delivery.models.Product
+import com.manuel.delivery.models.ResponseHttp
 import com.manuel.delivery.models.User
 import com.manuel.delivery.providers.CategoriesProvider
+import com.manuel.delivery.providers.ProductsProvider
 import com.manuel.delivery.utils.Constants
 import com.manuel.delivery.utils.TextWatchers
 import retrofit2.Call
@@ -27,6 +31,7 @@ import java.io.File
 
 class RestaurantProductFragment : Fragment() {
     private lateinit var categoriesProvider: CategoriesProvider
+    private lateinit var productsProvider: ProductsProvider
     private var binding: FragmentRestaurantProductBinding? = null
     private var user: User? = null
     private var file1: File? = null
@@ -151,6 +156,7 @@ class RestaurantProductFragment : Fragment() {
         binding?.let { b ->
             user?.let { u ->
                 categoriesProvider = CategoriesProvider(u.sessionToken)
+                productsProvider = ProductsProvider(u.sessionToken)
                 categoriesProvider.getAll()?.enqueue(object : Callback<MutableList<Category>> {
                     override fun onResponse(
                         call: Call<MutableList<Category>>,
@@ -162,23 +168,13 @@ class RestaurantProductFragment : Fragment() {
                                 android.R.layout.simple_dropdown_item_1line,
                                 listOfCategories
                             )
-                            with(b.atvCategory) {
-                                setAdapter(arrayAdapter)
-                                onItemSelectedListener =
-                                    object : AdapterView.OnItemSelectedListener {
-                                        override fun onItemSelected(
-                                            parent: AdapterView<*>?,
-                                            view: View?,
-                                            position: Int,
-                                            id: Long
-                                        ) {
-                                            categoryId =
-                                                listOfCategories[position].id.toString().trim()
-                                        }
-
-                                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                            b.atvCategory.setAdapter(arrayAdapter)
+                            b.atvCategory.onItemClickListener =
+                                AdapterView.OnItemClickListener { _, _, position, _ ->
+                                    listOfCategories[position].id?.let { s ->
+                                        categoryId = s
                                     }
-                            }
+                                }
                         }
                     }
 
@@ -204,11 +200,75 @@ class RestaurantProductFragment : Fragment() {
                 }
                 b.btnAddProduct.setOnClickListener {
                     b.btnAddProduct.isEnabled = false
+                    b.pbRestaurantProduct.visibility = View.VISIBLE
+                    val product = Product(
+                        name = b.etName.text.toString().trim(),
+                        description = b.etDescription.text.toString().trim(),
+                        price = b.etPrice.text.toString().trim().toDouble(),
+                        idCategory = categoryId
+                    )
+                    file1?.let { f1 ->
+                        file2?.let { f2 ->
+                            file3?.let { f3 ->
+                                val files = mutableListOf(f1, f2, f3)
+                                productsProvider.create(files, product)
+                                    ?.enqueue(object : Callback<ResponseHttp> {
+                                        override fun onResponse(
+                                            call: Call<ResponseHttp>,
+                                            response: Response<ResponseHttp>
+                                        ) {
+                                            response.body()?.let { responseHttp ->
+                                                if (responseHttp.isSuccess) {
+                                                    file1 = null
+                                                    file2 = null
+                                                    file3 = null
+                                                    with(b) {
+                                                        TextWatchers.clearAllTextFields(
+                                                            etName,
+                                                            etDescription,
+                                                            etPrice
+                                                        )
+                                                        imgProduct1.setImageResource(R.drawable.ic_image_search)
+                                                        imgProduct2.setImageResource(R.drawable.ic_image_search)
+                                                        imgProduct3.setImageResource(R.drawable.ic_image_search)
+                                                        pbRestaurantProduct.visibility = View.GONE
+                                                    }
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        responseHttp.message,
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                            }
+                                        }
+
+                                        override fun onFailure(
+                                            call: Call<ResponseHttp>,
+                                            t: Throwable
+                                        ) {
+                                            b.pbRestaurantProduct.visibility = View.GONE
+                                            Snackbar.make(
+                                                b.root,
+                                                getString(R.string.error_adding_product),
+                                                Snackbar.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    })
+                            }
+                        }
+                    }
                     if (file1 == null || file2 == null || file3 == null) {
-                        b.btnAddProduct.isEnabled = true
+                        b.pbRestaurantProduct.visibility = View.GONE
                         Snackbar.make(
                             b.root,
                             getString(R.string.you_must_capture_or_select_an_image),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (categoryId.isEmpty()) {
+                        Snackbar.make(
+                            b.root,
+                            getString(R.string.you_must_select_a_category),
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
