@@ -25,38 +25,50 @@ class ClientProductsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityClientProductsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.title = getString(R.string.add_category)
-        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
-        setSupportActionBar(binding.toolbar)
-        intent.getStringExtra(Constants.PROP_ID_CATEGORY)?.let { s ->
-            user = Constants.getUserInSession(this)
-            user?.let { u ->
-                productsProvider = ProductsProvider(u.sessionToken)
-                productsProvider.findByCategory(s)?.enqueue(object :
-                    Callback<MutableList<Product>> {
-                    override fun onResponse(
-                        call: Call<MutableList<Product>>,
-                        response: Response<MutableList<Product>>
-                    ) {
-                        response.body()?.let { listOfProducts ->
-                            productsAdapter =
-                                ProductsAdapter(this@ClientProductsListActivity, listOfProducts)
-                            binding.rvProductsList.apply {
-                                layoutManager =
-                                    GridLayoutManager(this@ClientProductsListActivity, 2)
-                                adapter = this@ClientProductsListActivity.productsAdapter
+        intent.getStringExtra(Constants.PROP_ID_CATEGORY)?.let { ID_CATEGORY ->
+            intent.getStringExtra(Constants.PROP_NAME_CATEGORY)?.let { NAME_CATEGORY ->
+                user = Constants.getUserInSession(this)
+                binding.toolbar.title = NAME_CATEGORY
+                binding.toolbar.setTitleTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorOnPrimary
+                    )
+                )
+                setSupportActionBar(binding.toolbar)
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                user?.let { u ->
+                    productsProvider = ProductsProvider(u.sessionToken)
+                    productsProvider.findByCategory(ID_CATEGORY)
+                        ?.enqueue(object : Callback<MutableList<Product>> {
+                            override fun onResponse(
+                                call: Call<MutableList<Product>>,
+                                response: Response<MutableList<Product>>
+                            ) {
+                                response.body()?.let { listOfProducts ->
+                                    productsAdapter =
+                                        ProductsAdapter(
+                                            this@ClientProductsListActivity,
+                                            listOfProducts
+                                        )
+                                    binding.rvProductsList.apply {
+                                        layoutManager =
+                                            GridLayoutManager(this@ClientProductsListActivity, 2)
+                                        adapter = this@ClientProductsListActivity.productsAdapter
+                                        setHasFixedSize(true)
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
-                        Snackbar.make(
-                            binding.root,
-                            getString(R.string.failed_to_get_all_products),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                })
+                            override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
+                                Snackbar.make(
+                                    binding.root,
+                                    getString(R.string.failed_to_get_all_products),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
+                }
             }
         }
     }

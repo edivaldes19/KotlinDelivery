@@ -1,5 +1,6 @@
 package com.manuel.delivery.api
 
+import com.manuel.delivery.routes.AddressRoutes
 import com.manuel.delivery.routes.CategoriesRoutes
 import com.manuel.delivery.routes.ProductsRoutes
 import com.manuel.delivery.routes.UsersRoutes
@@ -18,4 +19,7 @@ class ApiRoutes {
 
     fun getProductsRoutesWithToken(token: String): ProductsRoutes =
         retrofit.getClientWithToken(Constants.API_URL, token).create(ProductsRoutes::class.java)
+
+    fun getAddressRoutesWithToken(token: String): AddressRoutes =
+        retrofit.getClientWithToken(Constants.API_URL, token).create(AddressRoutes::class.java)
 }

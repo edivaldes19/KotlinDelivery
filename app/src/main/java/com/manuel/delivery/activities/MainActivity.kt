@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         TextWatchers.validateFieldsAsYouType(
             this,
-            binding.btnLogin,
+            binding.eFabLogin,
             binding.etEmail,
             binding.etPassword
         )
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             })
         }
-        binding.btnLogin.setOnClickListener {
+        binding.eFabLogin.setOnClickListener {
             if (TextWatchers.isEmailValid(binding.etEmail.text.toString().trim())) {
                 usersProvider.login(
                     binding.etEmail.text.toString().trim(),

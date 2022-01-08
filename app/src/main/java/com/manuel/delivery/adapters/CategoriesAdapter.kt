@@ -17,8 +17,7 @@ import com.manuel.delivery.utils.Constants
 class CategoriesAdapter(
     private var context: Context,
     private val listOfCategories: MutableList<Category>
-) :
-    RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
+) : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         context = parent.context
         val view = LayoutInflater.from(context).inflate(R.layout.item_category, parent, false)
@@ -35,6 +34,7 @@ class CategoriesAdapter(
         holder.binding.root.setOnClickListener {
             context.startActivity(Intent(context, ClientProductsListActivity::class.java).apply {
                 putExtra(Constants.PROP_ID_CATEGORY, category.id)
+                putExtra(Constants.PROP_NAME_CATEGORY, category.name)
             })
         }
     }

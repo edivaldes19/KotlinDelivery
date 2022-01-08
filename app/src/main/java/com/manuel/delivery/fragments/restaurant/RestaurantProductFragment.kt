@@ -105,11 +105,8 @@ class RestaurantProductFragment : Fragment() {
                     binding?.imgProduct3?.setImageURI(fileUri)
                 }
                 ImagePicker.RESULT_ERROR -> binding?.let { view ->
-                    Snackbar.make(
-                        view.root,
-                        ImagePicker.getError(data),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    Snackbar.make(view.root, ImagePicker.getError(data), Snackbar.LENGTH_SHORT)
+                        .show()
                 }
                 else -> {
                     binding?.let { view ->
@@ -133,7 +130,7 @@ class RestaurantProductFragment : Fragment() {
             user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(
                 requireContext(),
-                view.btnAddProduct,
+                view.eFabAddProduct,
                 view.etName,
                 view.etDescription,
                 view.etPrice
@@ -198,8 +195,8 @@ class RestaurantProductFragment : Fragment() {
                     ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
                         .createIntent { intent -> resultLauncher3.launch(intent) }
                 }
-                b.btnAddProduct.setOnClickListener {
-                    b.btnAddProduct.isEnabled = false
+                b.eFabAddProduct.setOnClickListener {
+                    b.eFabAddProduct.isEnabled = false
                     b.pbRestaurantProduct.visibility = View.VISIBLE
                     val product = Product(
                         name = b.etName.text.toString().trim(),

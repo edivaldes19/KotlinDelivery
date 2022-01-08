@@ -74,7 +74,7 @@ class ClientProfileFragment : Fragment() {
             user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(
                 requireContext(),
-                view.btnEditProfile,
+                view.eFabEditProfile,
                 view.etEmail,
                 view.etName,
                 view.etSurnames,
@@ -120,8 +120,8 @@ class ClientProfileFragment : Fragment() {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     })
                 }
-                b.btnEditProfile.setOnClickListener {
-                    b.btnEditProfile.isEnabled = false
+                b.eFabEditProfile.setOnClickListener {
+                    b.eFabEditProfile.isEnabled = false
                     u.apply {
                         name = b.etName.text.toString().trim()
                         lastname = b.etSurnames.text.toString().trim()
@@ -137,7 +137,7 @@ class ClientProfileFragment : Fragment() {
                                     response.body()?.let { responseHttp ->
                                         if (responseHttp.isSuccess) {
                                             saveUserSession(responseHttp.data.toString())
-                                            b.btnEditProfile.isEnabled = true
+                                            b.eFabEditProfile.isEnabled = true
                                             Toast.makeText(
                                                 requireContext(),
                                                 responseHttp.message,
@@ -148,7 +148,7 @@ class ClientProfileFragment : Fragment() {
                                 }
 
                                 override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                                    b.btnEditProfile.isEnabled = true
+                                    b.eFabEditProfile.isEnabled = true
                                     Snackbar.make(
                                         b.root,
                                         getString(R.string.failed_to_update_user_information),
@@ -165,7 +165,7 @@ class ClientProfileFragment : Fragment() {
                             response.body()?.let { responseHttp ->
                                 if (responseHttp.isSuccess) {
                                     saveUserSession(responseHttp.data.toString())
-                                    b.btnEditProfile.isEnabled = true
+                                    b.eFabEditProfile.isEnabled = true
                                     Toast.makeText(
                                         requireContext(),
                                         responseHttp.message,
@@ -176,7 +176,7 @@ class ClientProfileFragment : Fragment() {
                         }
 
                         override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                            b.btnEditProfile.isEnabled = true
+                            b.eFabEditProfile.isEnabled = true
                             Snackbar.make(
                                 b.root,
                                 getString(R.string.failed_to_update_user_information),

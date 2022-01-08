@@ -22,6 +22,7 @@
         android:background="@color/green_a700"
         app:itemIconTint="@color/colorOnPrimary"
         app:itemTextColor="@color/colorOnPrimary"
+        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

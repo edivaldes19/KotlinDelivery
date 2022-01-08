@@ -52,15 +52,18 @@
             app:layout_constraintTop_toBottomOf="@id/guideline"
             app:shapeAppearance="@style/ImageWithRoundedEdges" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnConfirm"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/eFabConfirmSaveImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             android:text="@string/accept"
+            android:textAlignment="center"
             android:textAllCaps="false"
-            app:cornerRadius="@dimen/margin_max"
+            android:textColor="@color/colorOnPrimary"
+            app:icon="@drawable/ic_check"
+            app:iconTint="@color/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@id/btnSkip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +80,6 @@
             app:cornerRadius="@dimen/margin_max"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnConfirm" />
+            app:layout_constraintTop_toBottomOf="@id/eFabConfirmSaveImage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

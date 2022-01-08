@@ -156,15 +156,19 @@
                 android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRegister"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/eFabRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_default"
-            android:enabled="false"
+            android:enabled="true"
             android:text="@string/check_in"
+            android:textAlignment="center"
             android:textAllCaps="false"
-            app:cornerRadius="@dimen/margin_max" />
+            android:textColor="@color/colorOnPrimary"
+            app:cornerRadius="@dimen/margin_max"
+            app:icon="@drawable/ic_app_registration"
+            app:iconTint="@color/colorOnPrimary" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvReturnToLog"

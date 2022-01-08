@@ -67,7 +67,11 @@ class RestaurantCategoriesFragment : Fragment() {
         binding = FragmentRestaurantCategoriesBinding.inflate(inflater, container, false)
         binding?.let { view ->
             user = Constants.getUserInSession(requireContext())
-            TextWatchers.validateFieldsAsYouType(requireContext(), view.btnAddCategory, view.etName)
+            TextWatchers.validateFieldsAsYouType(
+                requireContext(),
+                view.eFabAddCategory,
+                view.etName
+            )
             view.toolbar.title = getString(R.string.add_category)
             view.toolbar.setTitleTextColor(
                 ContextCompat.getColor(
@@ -90,8 +94,8 @@ class RestaurantCategoriesFragment : Fragment() {
                     ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
                         .createIntent { intent -> resultLauncher.launch(intent) }
                 }
-                b.btnAddCategory.setOnClickListener {
-                    b.btnAddCategory.isEnabled = false
+                b.eFabAddCategory.setOnClickListener {
+                    b.eFabAddCategory.isEnabled = false
                     val category = Category(name = b.etName.text.toString().trim())
                     file?.let { f ->
                         categoriesProvider.create(f, category)
@@ -106,7 +110,7 @@ class RestaurantCategoriesFragment : Fragment() {
                                             with(b) {
                                                 TextWatchers.clearAllTextFields(etName)
                                                 b.imgCategory.setImageResource(R.drawable.ic_image_search)
-                                                btnAddCategory.isEnabled = true
+                                                eFabAddCategory.isEnabled = true
                                             }
                                             Toast.makeText(
                                                 requireContext(),
@@ -118,7 +122,7 @@ class RestaurantCategoriesFragment : Fragment() {
                                 }
 
                                 override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                                    b.btnAddCategory.isEnabled = true
+                                    b.eFabAddCategory.isEnabled = true
                                     Snackbar.make(
                                         b.root,
                                         getString(R.string.error_adding_category),
@@ -128,7 +132,7 @@ class RestaurantCategoriesFragment : Fragment() {
                             })
                     }
                     if (file == null) {
-                        b.btnAddCategory.isEnabled = true
+                        b.eFabAddCategory.isEnabled = true
                         Snackbar.make(
                             b.root,
                             getString(R.string.you_must_capture_or_select_an_image),

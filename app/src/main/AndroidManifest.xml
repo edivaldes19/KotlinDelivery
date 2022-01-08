@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.manuel.delivery">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,17 +23,62 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
+            android:name=".activities.client.payments.form.ClientPaymentsFormActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.client.address.list.ClientAddressListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.client.address.map.ClientAddressMapActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.client.address.create.ClientAddressCreateActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.client.address.create.ClientAddressCreateActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.client.address.list.ClientAddressListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.client.address.list.ClientAddressListActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.client.products.my_list.ClientProductsMyListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.client.products.my_list.ClientProductsMyListActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.client.home.ClientHomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.client.products.detail.ClientProductsDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.client.products.list.ClientProductsListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".activities.client.products.list.ClientProductsListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".activities.client.home.ClientHomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.SaveImageActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.delivery.home.DeliveryHomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.restaurant.home.RestaurantHomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.SelectRoleActivity"
             android:exported="false"
@@ -59,6 +106,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+    </application>
 </manifest>

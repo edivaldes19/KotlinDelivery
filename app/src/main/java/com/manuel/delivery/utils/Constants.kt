@@ -16,6 +16,7 @@ object Constants {
         return null
     }
 
+    const val PERMISSION_ID = 1
     const val API_URL = "http://192.168.0.13:3000/api/"
     const val PARAM_CLIENT = "CLIENTE"
     const val PARAM_DELIVERY = "REPARTIDOR"
@@ -27,8 +28,11 @@ object Constants {
     const val ROUTE_PRODUCTS_CREATE = "products/create"
     const val ROUTE_CATEGORIES_CREATE = "categories/create"
     const val ROUTE_CATEGORIES_GET_ALL = "categories/getAll"
+    const val ROUTE_ADDRESS_FIND_BY_USER = "address/findByUser/{id_user}"
+    const val ROUTE_ADDRESS_CREATE = "address/create"
     const val ROUTE_PRODUCTS_FIND_BY_CATEGORY = "products/findByCategory/{id_category}"
     const val PROP_ID = "id"
+    const val PROP_ID_USER = "id_user"
     const val PROP_EMAIL = "email"
     const val PROP_NAME = "name"
     const val PROP_DESCRIPTION = "description"
@@ -48,8 +52,16 @@ object Constants {
     const val PROP_AMOUNT = "amount"
     const val PROP_CATEGORY = "category"
     const val PROP_ID_CATEGORY = "id_category"
+    const val PROP_NAME_CATEGORY = "category_name"
     const val PROP_PRODUCT = "product"
+    const val PROP_ORDER = "order"
     const val PROP_ROLE = "role"
+    const val PROP_CITY = "city"
+    const val PROP_COUNTRY = "country"
+    const val PROP_ADDRESS = "address"
+    const val PROP_LATITUDE = "latitude"
+    const val PROP_LONGITUDE = "longitude"
+    const val PROP_SUBURB = "suburb"
     const val PROP_IMAGE_CREATE = "image/*"
     const val PROP_TEXT_PLAIN = "text/plain"
     const val PROP_AUTHORIZATION = "Authorization"

@@ -57,47 +57,49 @@ class SaveImageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        user = Constants.getUserInSession(this)
         binding = ActivitySaveImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        usersProvider = UsersProvider(user?.sessionToken)
-        binding.imgProfile.setOnClickListener {
-            ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
-                .createIntent { intent -> imageResult.launch(intent) }
-        }
-        binding.btnConfirm.setOnClickListener {
-            file?.let { f ->
-                user?.let { u ->
-                    usersProvider.update(f, u)?.enqueue(object : Callback<ResponseHttp> {
-                        override fun onResponse(
-                            call: Call<ResponseHttp>,
-                            response: Response<ResponseHttp>
-                        ) {
-                            response.body()?.let { responseHttp ->
-                                if (responseHttp.isSuccess) {
-                                    saveUserSession(responseHttp.data.toString())
-                                    goToClientHome()
-                                    Toast.makeText(
-                                        this@SaveImageActivity,
-                                        responseHttp.message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+        user = Constants.getUserInSession(this)
+        user?.let { u ->
+            usersProvider = UsersProvider(u.sessionToken)
+            binding.imgProfile.setOnClickListener {
+                ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
+                    .createIntent { intent -> imageResult.launch(intent) }
+            }
+            binding.eFabConfirmSaveImage.setOnClickListener {
+                file?.let { f ->
+                    user?.let { u ->
+                        usersProvider.update(f, u)?.enqueue(object : Callback<ResponseHttp> {
+                            override fun onResponse(
+                                call: Call<ResponseHttp>,
+                                response: Response<ResponseHttp>
+                            ) {
+                                response.body()?.let { responseHttp ->
+                                    if (responseHttp.isSuccess) {
+                                        saveUserSession(responseHttp.data.toString())
+                                        goToClientHome()
+                                        Toast.makeText(
+                                            this@SaveImageActivity,
+                                            responseHttp.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
-                        }
 
-                        override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                            Snackbar.make(
-                                binding.root,
-                                getString(R.string.failed_to_update_user_information),
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
+                            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                                Snackbar.make(
+                                    binding.root,
+                                    getString(R.string.failed_to_update_user_information),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
+                    }
                 }
             }
+            binding.btnSkip.setOnClickListener { goToClientHome() }
         }
-        binding.btnSkip.setOnClickListener { goToClientHome() }
     }
 
     override fun onBackPressed() {

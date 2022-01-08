@@ -75,15 +75,29 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddCategory"
+            <ProgressBar
+                android:id="@+id/pbRestaurantCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/eFabAddCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline"
+                app:layout_constraintVertical_bias="0.95" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/eFabAddCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_default"
                 android:enabled="false"
                 android:text="@string/add_category"
+                android:textAlignment="center"
                 android:textAllCaps="false"
-                app:cornerRadius="@dimen/margin_max"
+                android:textColor="@color/colorOnPrimary"
+                app:icon="@drawable/ic_add_chart"
+                app:iconTint="@color/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

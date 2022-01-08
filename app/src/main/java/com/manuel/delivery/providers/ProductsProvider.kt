@@ -22,14 +22,14 @@ class ProductsProvider(private val token: String? = null) {
     fun findByCategory(idCategory: String): Call<MutableList<Product>>? =
         token?.let { t -> productsRoutes?.findByCategory(idCategory, t) }
 
-    fun create(files: MutableList<File>, product: Product): Call<ResponseHttp>? {
-        val images = arrayOfNulls<MultipartBody.Part>(files.size)
-        files.forEachIndexed { i, f ->
+    fun create(listOfFiles: MutableList<File>, product: Product): Call<ResponseHttp>? {
+        val arrayOfParts = arrayOfNulls<MultipartBody.Part>(listOfFiles.size)
+        listOfFiles.forEachIndexed { i, f ->
             val body = RequestBody.create(MediaType.parse(Constants.PROP_IMAGE_CREATE), f)
-            images[i] = MultipartBody.Part.createFormData(Constants.PROP_IMAGE, f.name, body)
+            arrayOfParts[i] = MultipartBody.Part.createFormData(Constants.PROP_IMAGE, f.name, body)
         }
         val requestBody =
             RequestBody.create(MediaType.parse(Constants.PROP_TEXT_PLAIN), product.toJson())
-        return token?.let { t -> productsRoutes?.create(images, requestBody, t) }
+        return token?.let { t -> productsRoutes?.create(arrayOfParts, requestBody, t) }
     }
 }

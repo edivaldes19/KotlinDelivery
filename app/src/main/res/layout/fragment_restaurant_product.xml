@@ -169,15 +169,18 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddProduct"
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/eFabAddProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_default"
                 android:enabled="false"
                 android:text="@string/add_product"
+                android:textAlignment="center"
                 android:textAllCaps="false"
-                app:cornerRadius="@dimen/margin_max" />
+                android:textColor="@color/colorOnPrimary"
+                app:icon="@drawable/ic_add_chart"
+                app:iconTint="@color/colorOnPrimary" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,15 +75,19 @@
             android:gravity="center|bottom"
             android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogin"
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/eFabLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_min"
                 android:enabled="false"
                 android:text="@string/login"
+                android:textAlignment="center"
                 android:textAllCaps="false"
-                app:cornerRadius="@dimen/margin_max" />
+                android:textColor="@color/colorOnPrimary"
+                app:cornerRadius="@dimen/margin_max"
+                app:icon="@drawable/ic_login"
+                app:iconTint="@color/colorOnPrimary" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvRegisterHere"
@@ -91,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_min"
                 android:background="?attr/selectableItemBackground"
-                android:drawableBottom="@drawable/ic_keyboard_arrow_right"
+                android:drawableBottom="@drawable/ic_navigate_next"
                 android:drawableTint="@color/green_a700"
                 android:text="@string/register_now"
                 android:textAlignment="center"

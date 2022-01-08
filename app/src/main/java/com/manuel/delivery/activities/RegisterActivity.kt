@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         TextWatchers.validateFieldsAsYouType(
             this,
-            binding.btnRegister,
+            binding.eFabRegister,
             binding.etName,
             binding.etSurnames,
             binding.etPhone,
@@ -36,7 +36,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.etConfirmPassword
         )
         binding.tvReturnToLog.setOnClickListener { returnToLog() }
-        binding.btnRegister.setOnClickListener {
+        binding.eFabRegister.setOnClickListener {
             if (TextWatchers.isEmailValid(binding.etEmail.text.toString().trim())) {
                 val password = binding.etPassword.text.toString().trim()
                 val confirmPassword = binding.etConfirmPassword.text.toString().trim()

@@ -1,15 +1,15 @@
 package com.manuel.delivery.fragments.client
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.manuel.delivery.R
+import com.manuel.delivery.activities.client.products.my_list.ClientProductsMyListActivity
 import com.manuel.delivery.adapters.CategoriesAdapter
 import com.manuel.delivery.databinding.FragmentClientCategoriesBinding
 import com.manuel.delivery.models.Category
@@ -33,6 +33,7 @@ class ClientCategoriesFragment : Fragment() {
         binding = FragmentClientCategoriesBinding.inflate(inflater, container, false)
         binding?.let { view ->
             user = Constants.getUserInSession(requireContext())
+            setHasOptionsMenu(true)
             view.toolbar.title = getString(R.string.categories)
             view.toolbar.setTitleTextColor(
                 ContextCompat.getColor(
@@ -82,5 +83,17 @@ class ClientCategoriesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_list_of_products, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.item_my_product_list) {
+            startActivity(Intent(requireContext(), ClientProductsMyListActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
