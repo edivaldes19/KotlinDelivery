@@ -34,20 +34,29 @@ class RolesAdapter(private var context: Context, private val listOfRoles: Mutabl
             .error(R.drawable.ic_broken_image).into(holder.binding.imgRole)
         holder.binding.root.setOnClickListener {
             when (role.roleName) {
-                Constants.PARAM_CLIENT -> {
-                    mySharedPreferences.saveData(Constants.PROP_ROLE, Constants.PARAM_CLIENT)
+                context.getString(R.string.tag_client) -> {
+                    mySharedPreferences.saveData(
+                        Constants.PROP_ROLE,
+                        context.getString(R.string.tag_client)
+                    )
                     context.startActivity(Intent(context, ClientHomeActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     })
                 }
-                Constants.PARAM_DELIVERY -> {
-                    mySharedPreferences.saveData(Constants.PROP_ROLE, Constants.PARAM_DELIVERY)
+                context.getString(R.string.tag_delivery) -> {
+                    mySharedPreferences.saveData(
+                        Constants.PROP_ROLE,
+                        context.getString(R.string.tag_delivery)
+                    )
                     context.startActivity(Intent(context, DeliveryHomeActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     })
                 }
-                Constants.PARAM_RESTAURANT -> {
-                    mySharedPreferences.saveData(Constants.PROP_ROLE, Constants.PARAM_RESTAURANT)
+                context.getString(R.string.tag_restaurant) -> {
+                    mySharedPreferences.saveData(
+                        Constants.PROP_ROLE,
+                        context.getString(R.string.tag_restaurant)
+                    )
                     context.startActivity(
                         Intent(
                             context,

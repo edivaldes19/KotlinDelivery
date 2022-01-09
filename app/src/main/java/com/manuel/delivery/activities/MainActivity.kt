@@ -108,17 +108,17 @@ class MainActivity : AppCompatActivity() {
             if (!mySharedPreferences.getData(Constants.PROP_ROLE).isNullOrEmpty()) {
                 when (mySharedPreferences.getData(Constants.PROP_ROLE).toString()
                     .replace("\"", "")) {
-                    Constants.PARAM_CLIENT -> {
+                    getString(R.string.tag_client) -> {
                         startActivity(Intent(this, ClientHomeActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         })
                     }
-                    Constants.PARAM_DELIVERY -> {
+                    getString(R.string.tag_delivery) -> {
                         startActivity(Intent(this, DeliveryHomeActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         })
                     }
-                    Constants.PARAM_RESTAURANT -> {
+                    getString(R.string.tag_restaurant) -> {
                         startActivity(Intent(this, RestaurantHomeActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         })
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         val mySharedPreferences = MySharedPreferences(this)
         val user = Gson().fromJson(data, User::class.java)
         mySharedPreferences.saveData(Constants.PROP_USER, user)
-        user.roles?.let { listOfRoles ->
+        user.listOfRoles?.let { listOfRoles ->
             if (listOfRoles.size > 1) {
                 startActivity(Intent(this, SelectRoleActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

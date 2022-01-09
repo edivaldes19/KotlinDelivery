@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Delivery</string>
+    <string name="tag_client">CLIENTE</string>
+    <string name="tag_delivery">REPARTIDOR</string>
+    <string name="tag_delivery_lowercase">Repartidor</string>
+    <string name="tag_restaurant">RESTAURANTE</string>
+    <string name="tag_paid_out">PAGADO</string>
+    <string name="tag_prepared">PREPARADO</string>
+    <string name="tag_on_the_way">EN CAMINO</string>
+    <string name="tag_delivered">ENTREGADO</string>
     <string name="login">Iniciar sesión</string>
     <string name="logout">Cerrar sesión</string>
     <string name="email">Correo electrónico</string>
@@ -39,14 +47,14 @@
     <string name="failed_to_get_all_categories">Error al obtener todas las categorías.</string>
     <string name="add_product">Agregar producto</string>
     <string name="product_name">Nombre</string>
-    <string name="description">Descripción</string>
-    <string name="price">Precio</string>
+    <string name="description">&lt;b>Descripción:&lt;/b> %1$s</string>
+    <string name="price">&lt;b>Precio:&lt;/b> $%1$.2f MXN</string>
     <string name="category">Categoría</string>
     <string name="press_again_to_exit">Oprima de nuevo para salir.</string>
     <string name="you_must_select_a_category">Debe seleccionar una categoría.</string>
     <string name="failed_to_get_all_products">Error al obtener todos los productos.</string>
     <string name="add_to_the_list">Agregar a la lista</string>
-    <string name="detail_total_price">Precio total</string>
+    <string name="detail_total_price">&lt;b>Precio total:&lt;/b> $%1$.2f MXN</string>
     <string name="amount">Cantidad</string>
     <string name="product_added_successfully">Producto agregado exitosamente.</string>
     <string name="update_quantity">Actualizar cantidad</string>
@@ -70,5 +78,18 @@
     <string name="error_getting_latitude_and_longitude">Error al obtener la latitud y longitud, intenta de nuevo.</string>
     <string name="failed_to_get_all_address">Error al obtener todas las direcciones.</string>
     <string name="you_must_select_an_address">Debe seleccionar una dirección.</string>
+    <string name="error_creating_order">Error al crear la orden.</string>
     <string name="unknown">Desconocido.</string>
+    <string name="order">Orden: %1$s</string>
+    <string name="number_of_order">Número de orden</string>
+    <string name="failed_to_get_all_orders">Error al obtener las ordenes.</string>
+    <string name="track_order">Rastrear pedido</string>
+    <string name="description_text_only">Descripción</string>
+    <string name="price_next_only">Precio</string>
+    <string name="order_date">&lt;b>Fecha de pedido:&lt;/b> %1$s</string>
+    <string name="client">&lt;b>Cliente:&lt;/b> %1$s %2$s</string>
+    <string name="deliver">&lt;b>Entregar en:&lt;/b> %1$s Col. %2$s</string>
+    <string name="actual_status">&lt;b>Estado actual:&lt;/b> %1$s</string>
+    <string name="total_products">&lt;b>Total de productos:&lt;/b> %1$d</string>
+    <string name="assign_dealer">Asignar repartidor</string>
 </resources>

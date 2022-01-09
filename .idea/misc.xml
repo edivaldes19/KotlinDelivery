@@ -11,23 +11,29 @@
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_big.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_medium.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_app_registration.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_attach_money.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_baseline_person.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_broken_image.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_calendar_month.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_check.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_cloud_download.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_contact_phone.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_delete.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_delivery_dining.xml" value="0.15555555555555556" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_edit.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_email.xml" value="0.12407407407407407" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_family_restroom.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_food_bank.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_image_search.xml" value="0.24259259259259258" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_info.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_keyboard_arrow_left.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_keyboard_arrow_right.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_list.xml" value="0.11296296296296296" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_location_city.xml" value="0.24259259259259258" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_location_on.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_login.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_logout.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_map.xml" value="0.24351851851851852" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_my_location.xml" value="0.24259259259259258" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_navigate_next.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/drawable/ic_password.xml" value="0.12407407407407407" />
@@ -43,30 +49,39 @@
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_address_list.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_address_map.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_home.xml" value="0.19907407407407407" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_orders_detail.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_payments_form.xml" value="0.23645833333333333" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_products_detail.xml" value="0.2" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_products_detail.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_products_list.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_client_products_my_list.xml" value="0.16" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_delivery_home.xml" value="0.2" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_main.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_restaurant_home.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_restaurant_orders_detail.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_save_image.xml" value="0.19907407407407407" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/activity_select_role.xml" value="0.16" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_categories.xml" value="0.23645833333333333" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_orders.xml" value="0.11196911196911197" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_profile.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_categories.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_orders.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_orders_status.xml" value="0.11018518518518519" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_client_profile.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_delivery_orders.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_delivery_profile.xml" value="0.17222222222222222" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_categories.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_food.xml" value="0.1" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_orders.xml" value="0.1" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_orders.xml" value="0.17962962962962964" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_orders_status.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_product.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/fragment_restaurant_profile.xml" value="0.1" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_address.xml" value="0.128" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_category.xml" value="0.1" />
-        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_my_products_list.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_client_order.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_my_products_list.xml" value="0.4" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_order.xml" value="0.4" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_order_products.xml" value="0.2359375" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_orders.xml" value="0.264" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_product.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_restaurant_order.xml" value="0.4" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/layout/item_role.xml" value="0.2" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_client.xml" value="0.2" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/Delivery/app/src/main/res/menu/bottom_navigation_menu_delivery.xml" value="0.24010416666666667" />

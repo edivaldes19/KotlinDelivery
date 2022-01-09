@@ -26,7 +26,7 @@ class SelectRoleActivity : AppCompatActivity() {
         if (!mySharedPreferences.getData(Constants.PROP_USER).isNullOrEmpty()) {
             val user =
                 Gson().fromJson(mySharedPreferences.getData(Constants.PROP_USER), User::class.java)
-            user.roles?.let { listOfRoles ->
+            user.listOfRoles?.let { listOfRoles ->
                 rolesAdapter = RolesAdapter(this, listOfRoles)
                 binding.rvRole.apply {
                     layoutManager = LinearLayoutManager(this@SelectRoleActivity)

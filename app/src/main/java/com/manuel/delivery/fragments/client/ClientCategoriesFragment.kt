@@ -57,6 +57,7 @@ class ClientCategoriesFragment : Fragment() {
                         call: Call<MutableList<Category>>,
                         response: Response<MutableList<Category>>
                     ) {
+
                         response.body()?.let { listOfCategories ->
                             categoriesAdapter =
                                 CategoriesAdapter(requireContext(), listOfCategories)

@@ -9,6 +9,9 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface UsersRoutes {
+    @GET(Constants.ROUTE_USERS_FIND_DELIVERY_MAN)
+    fun findDeliveryMan(@Header(Constants.PROP_AUTHORIZATION) token: String): Call<MutableList<User>>
+
     @POST(Constants.ROUTE_USERS_CREATE)
     fun register(@Body user: User): Call<ResponseHttp>
 

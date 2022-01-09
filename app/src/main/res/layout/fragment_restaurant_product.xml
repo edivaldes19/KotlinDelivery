@@ -109,7 +109,7 @@
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginBottom="@dimen/margin_min"
-                android:hint="@string/description"
+                android:hint="@string/description_text_only"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
                 app:startIconDrawable="@drawable/ic_description">
@@ -131,7 +131,7 @@
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginBottom="@dimen/margin_min"
-                android:hint="@string/price"
+                android:hint="@string/price_next_only"
                 app:counterEnabled="true"
                 app:counterMaxLength="10"
                 app:startIconDrawable="@drawable/ic_attach_money"

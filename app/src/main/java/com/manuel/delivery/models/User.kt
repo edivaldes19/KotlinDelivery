@@ -14,10 +14,8 @@ class User(
     @SerializedName(Constants.PROP_PASSWORD) var password: String,
     @SerializedName(Constants.PROP_IS_AVAILABLE) var isAvailable: Boolean? = null,
     @SerializedName(Constants.PROP_SESSION_TOKEN) var sessionToken: String? = null,
-    @SerializedName("${Constants.PROP_ROLE}s") var roles: MutableList<Role>? = null
+    @SerializedName("${Constants.PROP_ROLE}s") var listOfRoles: MutableList<Role>? = null
 ) {
-    override fun toString(): String =
-        "User(id=$id, email='$email', name='$name', lastname='$lastname', phone='$phone', image=$image, password='$password', isAvailable=$isAvailable, sessionToken=$sessionToken, roles=$roles)"
-
+    override fun toString(): String = "$name $lastname"
     fun toJson(): String = Gson().toJson(this)
 }

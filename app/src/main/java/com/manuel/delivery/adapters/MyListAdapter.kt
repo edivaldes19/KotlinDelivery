@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.manuel.delivery.R
@@ -35,7 +36,10 @@ class MyListAdapter(
             AnimationUtils.loadAnimation(context, R.anim.fade_transition)
         holder.binding.tvName.text = product.name
         holder.binding.tvAmount.text = "${product.amount}"
-        "$${product.amount * product.price} MXN".also { p -> holder.binding.tvPrice.text = p }
+        holder.binding.tvPrice.text = HtmlCompat.fromHtml(
+            context.getString(R.string.price, product.amount * product.price),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
         Glide.with(context).load(product.image1).placeholder(R.drawable.ic_cloud_download)
             .error(R.drawable.ic_broken_image).into(holder.binding.imgProduct)
         holder.binding.fabSum.setOnClickListener { addProduct(product, holder) }
@@ -54,9 +58,10 @@ class MyListAdapter(
                 product.amount++
                 listOfProducts[i].amount = product.amount
                 holder.binding.tvAmount.text = "${product.amount}"
-                "$${product.amount * product.price} MXN".also { p ->
-                    holder.binding.tvPrice.text = p
-                }
+                holder.binding.tvPrice.text = HtmlCompat.fromHtml(
+                    context.getString(R.string.price, product.amount * product.price),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
                 mySharedPreferences.saveData(Constants.PROP_ORDER, listOfProducts)
                 (context as? ClientProductsMyListActivity)?.setTotal(getTotal())
             }
@@ -76,9 +81,10 @@ class MyListAdapter(
                 product.amount--
                 listOfProducts[i].amount = product.amount
                 holder.binding.tvAmount.text = "${product.amount}"
-                "$${product.amount * product.price} MXN".also { p ->
-                    holder.binding.tvPrice.text = p
-                }
+                holder.binding.tvPrice.text = HtmlCompat.fromHtml(
+                    context.getString(R.string.price, product.amount * product.price),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
                 mySharedPreferences.saveData(Constants.PROP_ORDER, listOfProducts)
                 (context as? ClientProductsMyListActivity)?.setTotal(getTotal())
             }
@@ -110,9 +116,7 @@ class MyListAdapter(
 
     private fun getTotal(): Double {
         var total = 0.0
-        listOfProducts.forEach { prod ->
-            total += (prod.amount * prod.price)
-        }
+        listOfProducts.forEach { prod -> total += (prod.amount * prod.price) }
         return total
     }
 

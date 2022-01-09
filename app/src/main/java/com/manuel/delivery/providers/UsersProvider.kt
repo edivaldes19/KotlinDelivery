@@ -21,6 +21,9 @@ class UsersProvider(private val token: String? = null) {
         usersRoutesToken = token?.let { t -> api.getUsersRoutesWithToken(t) }
     }
 
+    fun findDeliveryMan(): Call<MutableList<User>>? =
+        token?.let { t -> usersRoutesToken?.findDeliveryMan(t) }
+
     fun register(user: User): Call<ResponseHttp>? = usersRoutes?.register(user)
     fun login(email: String, password: String): Call<ResponseHttp>? =
         usersRoutes?.login(email, password)

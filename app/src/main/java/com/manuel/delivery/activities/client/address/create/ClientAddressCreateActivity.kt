@@ -79,7 +79,7 @@ class ClientAddressCreateActivity : AppCompatActivity() {
                                 call: Call<ResponseHttp>,
                                 response: Response<ResponseHttp>
                             ) {
-                                response.body()?.let {
+                                response.body()?.let { responseHttp ->
                                     startActivity(
                                         Intent(
                                             this@ClientAddressCreateActivity,
@@ -88,7 +88,7 @@ class ClientAddressCreateActivity : AppCompatActivity() {
                                     )
                                     Toast.makeText(
                                         this@ClientAddressCreateActivity,
-                                        response.message(),
+                                        responseHttp.message,
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }

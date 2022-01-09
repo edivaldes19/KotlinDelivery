@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -45,8 +46,9 @@ class ClientProductsMyListActivity : AppCompatActivity() {
     }
 
     fun setTotal(total: Double) {
-        "$${getString(R.string.detail_total_price)}: $total MXN".also { t ->
-            binding.tvTotalPrice.text = t
-        }
+        binding.tvTotalPrice.text = HtmlCompat.fromHtml(
+            getString(R.string.detail_total_price, total),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
     }
 }

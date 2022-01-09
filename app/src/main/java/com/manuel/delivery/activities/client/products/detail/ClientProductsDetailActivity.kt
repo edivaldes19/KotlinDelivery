@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.gson.Gson
@@ -42,7 +43,10 @@ class ClientProductsDetailActivity : AppCompatActivity() {
                                 prod.amount = listOfProducts[i].amount
                                 tvAmount.text = "${prod.amount}"
                                 totalPrice = prod.amount * prod.price
-                                "$$totalPrice MXN".also { tp -> tvTotalPrice.text = tp }
+                                tvTotalPrice.text = HtmlCompat.fromHtml(
+                                    getString(R.string.detail_total_price, totalPrice),
+                                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                                )
                                 eFabAddToTheList.text = getString(R.string.update_quantity)
                             }
                         }
@@ -56,8 +60,14 @@ class ClientProductsDetailActivity : AppCompatActivity() {
                 with(binding) {
                     isProduct.setImageList(listOfImages)
                     tvName.text = prod.name
-                    tvDescription.text = prod.description
-                    "$${prod.price} MXN".also { tp -> tvTotalPrice.text = tp }
+                    tvDescription.text = HtmlCompat.fromHtml(
+                        getString(R.string.description, prod.description),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                    tvPrice.text = HtmlCompat.fromHtml(
+                        getString(R.string.price, prod.price),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
                 }
                 binding.fabSum.setOnClickListener { addProduct() }
                 binding.fabSub.setOnClickListener { removeProduct() }
@@ -86,34 +96,44 @@ class ClientProductsDetailActivity : AppCompatActivity() {
 
     private fun addProduct() {
         product?.let { prod ->
-            if (prod.amount < 5) {
-                binding.fabSum.isEnabled = true
-                binding.fabSub.isEnabled = true
-                prod.amount++
-                totalPrice = prod.price * prod.amount
-                binding.tvAmount.text = "${prod.amount}"
-                "$$totalPrice MXN".also { tp -> binding.tvTotalPrice.text = tp }
-            }
-            if (prod.amount == 5) {
-                binding.fabSum.isEnabled = false
-                binding.fabSub.isEnabled = true
+            with(binding) {
+                if (prod.amount < 5) {
+                    fabSum.isEnabled = true
+                    fabSub.isEnabled = true
+                    prod.amount++
+                    totalPrice = prod.price * prod.amount
+                    tvAmount.text = "${prod.amount}"
+                    tvTotalPrice.text = HtmlCompat.fromHtml(
+                        getString(R.string.detail_total_price, totalPrice),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                }
+                if (prod.amount == 5) {
+                    fabSum.isEnabled = false
+                    fabSub.isEnabled = true
+                }
             }
         }
     }
 
     private fun removeProduct() {
         product?.let { prod ->
-            if (prod.amount > 1) {
-                binding.fabSub.isEnabled = true
-                binding.fabSum.isEnabled = true
-                prod.amount--
-                totalPrice = prod.price * prod.amount
-                binding.tvAmount.text = "${prod.amount}"
-                "$$totalPrice MXN".also { tp -> binding.tvTotalPrice.text = tp }
-            }
-            if (prod.amount == 1) {
-                binding.fabSub.isEnabled = false
-                binding.fabSum.isEnabled = true
+            with(binding) {
+                if (prod.amount > 1) {
+                    fabSub.isEnabled = true
+                    fabSum.isEnabled = true
+                    prod.amount--
+                    totalPrice = prod.price * prod.amount
+                    tvAmount.text = "${prod.amount}"
+                    tvTotalPrice.text = HtmlCompat.fromHtml(
+                        getString(R.string.detail_total_price, totalPrice),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                }
+                if (prod.amount == 1) {
+                    fabSub.isEnabled = false
+                    fabSum.isEnabled = true
+                }
             }
         }
     }

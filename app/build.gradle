@@ -18,9 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildFeatures {
-        viewBinding true
-    }
+    buildFeatures { viewBinding true }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -34,6 +32,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.google.maps.android:maps-ktx:3.3.0'
     implementation 'com.google.maps.android:maps-utils-ktx:3.3.0'
