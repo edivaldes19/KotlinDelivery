@@ -14,6 +14,7 @@ class User(
     @SerializedName(Constants.PROP_PASSWORD) var password: String,
     @SerializedName(Constants.PROP_IS_AVAILABLE) var isAvailable: Boolean? = null,
     @SerializedName(Constants.PROP_SESSION_TOKEN) var sessionToken: String? = null,
+    @SerializedName(Constants.PROP_NOTIFICATION_TOKEN) var notificationToken: String? = null,
     @SerializedName("${Constants.PROP_ROLE}s") var listOfRoles: MutableList<Role>? = null
 ) {
     override fun toString(): String = "$name $lastname"

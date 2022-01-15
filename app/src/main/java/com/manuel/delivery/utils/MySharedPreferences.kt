@@ -9,8 +9,15 @@ class MySharedPreferences(context: Context) {
     private var sharedPreferences: SharedPreferences? = null
 
     init {
-        sharedPreferences =
-            context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        sharedPreferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+    }
+
+    fun getSelection(key: String): Boolean? = sharedPreferences?.getBoolean(key, true)
+    fun saveSelection(key: String, value: Boolean) {
+        sharedPreferences?.edit {
+            putBoolean(key, value)
+            apply()
+        }
     }
 
     fun getData(key: String): String? = sharedPreferences?.getString(key, "")

@@ -31,54 +31,31 @@ class ClientCategoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentClientCategoriesBinding.inflate(inflater, container, false)
-        binding?.let { view ->
-            user = Constants.getUserInSession(requireContext())
+        binding?.let { b ->
+            setupToolbar()
             setHasOptionsMenu(true)
-            view.toolbar.title = getString(R.string.categories)
-            view.toolbar.setTitleTextColor(
+            user = Constants.getUserInSession(requireContext())
+            return b.root
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    private fun setupToolbar() {
+        binding?.let { b ->
+            b.toolbar.title = getString(R.string.categories)
+            b.toolbar.setTitleTextColor(
                 ContextCompat.getColor(
                     requireContext(),
                     R.color.colorOnPrimary
                 )
             )
-            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
-            return view.root
+            (activity as? AppCompatActivity)?.setSupportActionBar(b.toolbar)
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.let { b ->
-            user?.let { u ->
-                categoriesProvider = CategoriesProvider(u.sessionToken)
-                categoriesProvider.getAll()?.enqueue(object : Callback<MutableList<Category>> {
-                    override fun onResponse(
-                        call: Call<MutableList<Category>>,
-                        response: Response<MutableList<Category>>
-                    ) {
-
-                        response.body()?.let { listOfCategories ->
-                            categoriesAdapter =
-                                CategoriesAdapter(requireContext(), listOfCategories)
-                            b.rvCategories.apply {
-                                layoutManager = LinearLayoutManager(requireContext())
-                                adapter = this@ClientCategoriesFragment.categoriesAdapter
-                                setHasFixedSize(true)
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<MutableList<Category>>, t: Throwable) {
-                        Snackbar.make(
-                            b.root,
-                            getString(R.string.failed_to_get_all_categories),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                })
-            }
-        }
+        getCategories()
     }
 
     override fun onDestroyView() {
@@ -96,5 +73,37 @@ class ClientCategoriesFragment : Fragment() {
             startActivity(Intent(requireContext(), ClientProductsMyListActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getCategories() {
+        binding?.let { b ->
+            user?.let { u ->
+                categoriesProvider = CategoriesProvider(u.sessionToken)
+                categoriesProvider.getAll()?.enqueue(object : Callback<MutableList<Category>> {
+                    override fun onResponse(
+                        call: Call<MutableList<Category>>,
+                        response: Response<MutableList<Category>>
+                    ) {
+                        response.body()?.let { listOfCategories ->
+                            categoriesAdapter =
+                                CategoriesAdapter(requireContext(), listOfCategories)
+                            b.rvCategories.apply {
+                                layoutManager = LinearLayoutManager(requireContext())
+                                adapter = this@ClientCategoriesFragment.categoriesAdapter
+                                setHasFixedSize(true)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MutableList<Category>>, t: Throwable) {
+                        Snackbar.make(
+                            b.root,
+                            t.message.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            }
+        }
     }
 }

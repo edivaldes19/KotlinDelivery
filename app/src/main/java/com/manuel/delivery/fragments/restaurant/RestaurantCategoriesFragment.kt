@@ -66,20 +66,13 @@ class RestaurantCategoriesFragment : Fragment() {
     ): View? {
         binding = FragmentRestaurantCategoriesBinding.inflate(inflater, container, false)
         binding?.let { view ->
+            setupToolbar()
             user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(
                 requireContext(),
                 view.eFabAddCategory,
                 view.etName
             )
-            view.toolbar.title = getString(R.string.add_category)
-            view.toolbar.setTitleTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.colorOnPrimary
-                )
-            )
-            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
             return view.root
         }
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -88,58 +81,10 @@ class RestaurantCategoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.let { b ->
-            user?.let { u ->
-                categoriesProvider = CategoriesProvider(u.sessionToken)
-                b.imgCategory.setOnClickListener {
-                    ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
-                        .createIntent { intent -> resultLauncher.launch(intent) }
-                }
-                b.eFabAddCategory.setOnClickListener {
-                    b.eFabAddCategory.isEnabled = false
-                    val category = Category(name = b.etName.text.toString().trim())
-                    file?.let { f ->
-                        categoriesProvider.create(f, category)
-                            ?.enqueue(object : Callback<ResponseHttp> {
-                                override fun onResponse(
-                                    call: Call<ResponseHttp>,
-                                    response: Response<ResponseHttp>
-                                ) {
-                                    response.body()?.let { responseHttp ->
-                                        if (responseHttp.isSuccess) {
-                                            file = null
-                                            with(b) {
-                                                TextWatchers.clearAllTextFields(etName)
-                                                b.imgCategory.setImageResource(R.drawable.ic_image_search)
-                                                eFabAddCategory.isEnabled = true
-                                            }
-                                            Toast.makeText(
-                                                requireContext(),
-                                                responseHttp.message,
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    }
-                                }
-
-                                override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                                    b.eFabAddCategory.isEnabled = true
-                                    Snackbar.make(
-                                        b.root,
-                                        getString(R.string.error_adding_category),
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-                                }
-                            })
-                    }
-                    if (file == null) {
-                        b.eFabAddCategory.isEnabled = true
-                        Snackbar.make(
-                            b.root,
-                            getString(R.string.you_must_capture_or_select_an_image),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
+            b.eFabAddCategory.setOnClickListener { addCategory() }
+            b.imgCategory.setOnClickListener {
+                ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
+                    .createIntent { intent -> resultLauncher.launch(intent) }
             }
         }
     }
@@ -147,5 +92,72 @@ class RestaurantCategoriesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun setupToolbar() {
+        binding?.let { b ->
+            b.toolbar.title = getString(R.string.add_category)
+            b.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorOnPrimary
+                )
+            )
+            (activity as? AppCompatActivity)?.setSupportActionBar(b.toolbar)
+        }
+    }
+
+    private fun addCategory() {
+        binding?.let { b ->
+            user?.let { u ->
+                categoriesProvider = CategoriesProvider(u.sessionToken)
+                b.eFabAddCategory.isEnabled = false
+                val category = Category(name = b.etName.text.toString().trim())
+                file?.let { f ->
+                    categoriesProvider.create(f, category)
+                        ?.enqueue(object : Callback<ResponseHttp> {
+                            override fun onResponse(
+                                call: Call<ResponseHttp>,
+                                response: Response<ResponseHttp>
+                            ) {
+                                response.body()?.let { responseHttp ->
+                                    if (responseHttp.isSuccess) {
+                                        file = null
+                                        with(b) {
+                                            TextWatchers.clearAllTextFields(
+                                                etName
+                                            )
+                                            b.imgCategory.setImageResource(R.drawable.ic_image_search)
+                                            eFabAddCategory.isEnabled = true
+                                        }
+                                        Toast.makeText(
+                                            requireContext(),
+                                            responseHttp.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                                b.eFabAddCategory.isEnabled = true
+                                Snackbar.make(
+                                    b.root,
+                                    getString(R.string.error_adding_category),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
+                }
+                if (file == null) {
+                    b.eFabAddCategory.isEnabled = true
+                    Snackbar.make(
+                        b.root,
+                        getString(R.string.you_must_capture_or_select_an_image),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }

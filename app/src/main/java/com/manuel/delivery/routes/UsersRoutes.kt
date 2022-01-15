@@ -35,4 +35,10 @@ interface UsersRoutes {
         @Body user: User,
         @Header(Constants.PROP_AUTHORIZATION) token: String
     ): Call<ResponseHttp>
+
+    @PUT(Constants.ROUTE_USERS_UPDATE_NOTIFICATION_TOKEN)
+    fun updateNotificationToken(
+        @Body user: User,
+        @Header(Constants.PROP_AUTHORIZATION) token: String
+    ): Call<ResponseHttp>
 }

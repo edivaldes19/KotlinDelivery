@@ -2,8 +2,6 @@ package com.manuel.delivery.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +24,6 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var usersProvider = UsersProvider()
-    private var isPressed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_Delivery)
@@ -44,68 +41,60 @@ class MainActivity : AppCompatActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             })
         }
-        binding.eFabLogin.setOnClickListener {
-            if (TextWatchers.isEmailValid(binding.etEmail.text.toString().trim())) {
-                usersProvider.login(
-                    binding.etEmail.text.toString().trim(),
-                    binding.etPassword.text.toString().trim()
-                )?.enqueue(object : Callback<ResponseHttp> {
-                    override fun onResponse(
-                        call: Call<ResponseHttp>,
-                        response: Response<ResponseHttp>
-                    ) {
-                        response.body()?.let { responseHttp ->
-                            if (responseHttp.isSuccess) {
-                                saveUserSession(responseHttp.data.toString())
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    responseHttp.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else if (!responseHttp.isSuccess) {
-                                Snackbar.make(
-                                    binding.root,
-                                    getString(R.string.wrong_credentials),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                        Snackbar.make(
-                            binding.root,
-                            getString(R.string.failed_to_login),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                })
-            } else {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.invalid_email),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-        }
+        binding.eFabLogin.setOnClickListener { login() }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (isPressed) {
-            finishAffinity()
+        finishAffinity()
+    }
+
+    private fun login() {
+        if (TextWatchers.isEmailValid(binding.etEmail.text.toString().trim())) {
+            usersProvider.login(
+                binding.etEmail.text.toString().trim(),
+                binding.etPassword.text.toString().trim()
+            )?.enqueue(object : Callback<ResponseHttp> {
+                override fun onResponse(
+                    call: Call<ResponseHttp>,
+                    response: Response<ResponseHttp>
+                ) {
+                    response.body()?.let { responseHttp ->
+                        if (responseHttp.isSuccess) {
+                            saveUserSession(responseHttp.data.toString())
+                            Toast.makeText(
+                                this@MainActivity,
+                                responseHttp.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Snackbar.make(
+                                binding.root,
+                                responseHttp.message,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                    Snackbar.make(binding.root, t.message.toString(), Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            })
         } else {
-            isPressed = true
-            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
+            Snackbar.make(
+                binding.root,
+                getString(R.string.invalid_email),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
-        val runnable = Runnable { isPressed = false }
-        Handler(Looper.getMainLooper()).postDelayed(runnable, 2000)
     }
 
     private fun getUserInSession() {
         val mySharedPreferences = MySharedPreferences(this)
-        if (!mySharedPreferences.getData(Constants.PROP_USER).isNullOrEmpty()) {
-            if (!mySharedPreferences.getData(Constants.PROP_ROLE).isNullOrEmpty()) {
+        if (!mySharedPreferences.getData(Constants.PROP_USER).isNullOrBlank()) {
+            if (!mySharedPreferences.getData(Constants.PROP_ROLE).isNullOrBlank()) {
                 when (mySharedPreferences.getData(Constants.PROP_ROLE).toString()
                     .replace("\"", "")) {
                     getString(R.string.tag_client) -> {

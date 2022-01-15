@@ -30,7 +30,7 @@ class TextWatchers {
                         before: Int,
                         count: Int
                     ) {
-                        if (s.isNullOrEmpty()) {
+                        if (s.isNullOrBlank()) {
                             text.error = context.getString(R.string.this_field_is_required)
                             extendedFloatingActionButton.isEnabled = false
                         } else {
@@ -41,7 +41,7 @@ class TextWatchers {
                     override fun afterTextChanged(s: Editable?) {
                         textInputEditText.forEach { editText ->
                             extendedFloatingActionButton.isEnabled =
-                                !s.isNullOrEmpty() && !editText.text.isNullOrEmpty()
+                                !s.isNullOrBlank() && !editText.text.isNullOrBlank()
                         }
                     }
                 })
@@ -50,12 +50,14 @@ class TextWatchers {
 
         fun clearAllTextFields(vararg textInputEditText: TextInputEditText) {
             textInputEditText.forEach { editText ->
-                editText.text?.clear()
-                editText.error = null
+                editText.apply {
+                    text?.clear()
+                    error = null
+                }
             }
         }
 
         fun isEmailValid(email: String): Boolean =
-            email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            email.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

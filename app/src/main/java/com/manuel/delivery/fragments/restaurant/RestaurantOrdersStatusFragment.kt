@@ -40,42 +40,47 @@ class RestaurantOrdersStatusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.let { b ->
-            user?.let { u ->
-                status?.let { s ->
-                    ordersProvider = OrdersProvider(u.sessionToken)
-                    ordersProvider.findByStatus(s)?.enqueue(object : Callback<MutableList<Order>> {
-                        override fun onResponse(
-                            call: Call<MutableList<Order>>,
-                            response: Response<MutableList<Order>>
-                        ) {
-                            response.body()?.let { listOfOrders ->
-                                ordersRestaurantAdapter =
-                                    OrdersRestaurantAdapter(requireContext(), listOfOrders)
-                                b.rvRestaurantOrders.apply {
-                                    layoutManager = LinearLayoutManager(requireContext())
-                                    adapter =
-                                        this@RestaurantOrdersStatusFragment.ordersRestaurantAdapter
-                                    setHasFixedSize(true)
-                                }
-                            }
-                        }
-
-                        override fun onFailure(call: Call<MutableList<Order>>, t: Throwable) {
-                            Snackbar.make(
-                                b.root,
-                                getString(R.string.failed_to_get_all_orders),
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
-                }
-            }
-        }
+        getOrders()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun getOrders() {
+        binding?.let { b ->
+            user?.let { u ->
+                status?.let { s ->
+                    ordersProvider = OrdersProvider(u.sessionToken)
+                    ordersProvider.findByStatus(s)
+                        ?.enqueue(object : Callback<MutableList<Order>> {
+                            override fun onResponse(
+                                call: Call<MutableList<Order>>,
+                                response: Response<MutableList<Order>>
+                            ) {
+                                response.body()?.let { listOfOrders ->
+                                    ordersRestaurantAdapter =
+                                        OrdersRestaurantAdapter(requireContext(), listOfOrders)
+                                    b.rvRestaurantOrders.apply {
+                                        layoutManager = LinearLayoutManager(requireContext())
+                                        adapter =
+                                            this@RestaurantOrdersStatusFragment.ordersRestaurantAdapter
+                                        setHasFixedSize(true)
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<MutableList<Order>>, t: Throwable) {
+                                Snackbar.make(
+                                    b.root,
+                                    getString(R.string.failed_to_get_all_orders),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
+                }
+            }
+        }
     }
 }

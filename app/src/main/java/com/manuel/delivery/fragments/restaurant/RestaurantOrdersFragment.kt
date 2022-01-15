@@ -18,16 +18,16 @@ class RestaurantOrdersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRestaurantOrdersBinding.inflate(inflater, container, false)
-        binding?.let { view ->
+        binding?.let { b ->
             val restaurantTabsPagerAdapter = RestaurantTabsPagerAdapter(
                 requireContext(),
                 requireActivity().supportFragmentManager,
                 lifecycle,
                 4
             )
-            view.vpRestaurantOrders.adapter = restaurantTabsPagerAdapter
-            view.vpRestaurantOrders.isUserInputEnabled = true
-            TabLayoutMediator(view.tlRestaurantOrders, view.vpRestaurantOrders) { tab, position ->
+            b.vpRestaurantOrders.adapter = restaurantTabsPagerAdapter
+            b.vpRestaurantOrders.isUserInputEnabled = true
+            TabLayoutMediator(b.tlRestaurantOrders, b.vpRestaurantOrders) { tab, position ->
                 when (position) {
                     0 -> tab.text = getString(R.string.tag_paid_out)
                     1 -> tab.text = getString(R.string.tag_prepared)
@@ -35,7 +35,7 @@ class RestaurantOrdersFragment : Fragment() {
                     3 -> tab.text = getString(R.string.tag_delivered)
                 }
             }.attach()
-            return view.root
+            return b.root
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }

@@ -63,24 +63,22 @@ class ClientAddressMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.uiSettings.isZoomControlsEnabled = true
         getLastLocation()
+        onCameraMove()
+    }
+
+    private fun onCameraMove() {
         mMap.setOnCameraIdleListener {
             try {
                 val geocoder = Geocoder(this)
                 addressLatLng = mMap.cameraPosition.target
                 addressLatLng?.let { latLng ->
-                    val addressList =
-                        geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+                    val addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
                     city = addressList[0].locality
                     country = addressList[0].countryName
                     address = addressList[0].getAddressLine(0)
-                    "$address $city $country".also { a ->
-                        if (a.isNotEmpty()) {
-                            binding.etAddress.setText(a)
-                        } else {
-                            binding.etAddress.setText(getString(R.string.unknown))
-                        }
-                    }
+                    "$address $city $country".also { a -> binding.etAddress.setText(a) }
                 }
             } catch (e: Exception) {
             }

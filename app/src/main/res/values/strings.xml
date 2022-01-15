@@ -1,6 +1,8 @@
 <resources>
+    <string name="google_maps_key_course">AIzaSyCMGUUuJiVCUNfh4iDvu5KNVmRbxNyzIzY</string>
     <string name="app_name">Delivery</string>
     <string name="tag_client">CLIENTE</string>
+    <string name="tag_client_lowercase">Cliente</string>
     <string name="tag_delivery">REPARTIDOR</string>
     <string name="tag_delivery_lowercase">Repartidor</string>
     <string name="tag_restaurant">RESTAURANTE</string>
@@ -67,8 +69,10 @@
     <string name="choose_where_to_receive_your_purchase">Elige dónde recibir tu compra</string>
     <string name="continues">Continuar</string>
     <string name="fill_in_these_details">Completa estos datos</string>
-    <string name="suburb">Colonia</string>
-    <string name="address">Dirección</string>
+    <string name="tag_suburb">Colonia</string>
+    <string name="tag_address">Dirección</string>
+    <string name="address">&lt;b>Dirección:&lt;/b> %1$s</string>
+    <string name="suburb">&lt;b>Colonia:&lt;/b> %1$s</string>
     <string name="reference_point">Punto de referencia</string>
     <string name="add_address">Agregar dirección</string>
     <string name="my_addresses">Mis direcciones</string>
@@ -88,8 +92,28 @@
     <string name="price_next_only">Precio</string>
     <string name="order_date">&lt;b>Fecha de pedido:&lt;/b> %1$s</string>
     <string name="client">&lt;b>Cliente:&lt;/b> %1$s %2$s</string>
+    <string name="delivery">&lt;b>Repartidor:&lt;/b> %1$s %2$s</string>
     <string name="deliver">&lt;b>Entregar en:&lt;/b> %1$s Col. %2$s</string>
     <string name="actual_status">&lt;b>Estado actual:&lt;/b> %1$s</string>
+    <string name="assigned_delivery_man">&lt;b>Repartidor asignado:&lt;/b> %1$s %2$s</string>
     <string name="total_products">&lt;b>Total de productos:&lt;/b> %1$d</string>
     <string name="assign_dealer">Asignar repartidor</string>
+    <string name="failed_to_assign_dealer">Error al asignar el repartidor.</string>
+    <string name="start_delivery">Iniciar entrega</string>
+    <string name="back_to_map">Volver al mapa</string>
+    <string name="my_position">Mi posición</string>
+    <string name="latitude">Latitud: %1$.5f</string>
+    <string name="longitude">Longitud: %1$.5f</string>
+    <string name="delivery_route">Ruta de entrega</string>
+    <string name="customer_position">Posición del cliente</string>
+    <string name="dealer_position">Posición del repartidor</string>
+    <string name="map_view">Vista de mapa</string>
+    <string name="satellite_view">Vista de satélite</string>
+    <string name="center_position">Posición al centro</string>
+    <string name="focus_my_position">Enfocar mi posición</string>
+    <string name="deliver_order">Entregar pedido</string>
+    <string name="press_to_call">Oprime para llamar</string>
+    <string name="the_telephone_permission_is_disabled">El permiso de Teléfono esta deshabilitado.</string>
+    <string name="deliver_here">Entregar aquí.</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
 </resources>

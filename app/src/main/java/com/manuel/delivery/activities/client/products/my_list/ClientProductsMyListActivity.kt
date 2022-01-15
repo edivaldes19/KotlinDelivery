@@ -22,14 +22,25 @@ class ClientProductsMyListActivity : AppCompatActivity() {
     private var listOfProducts = mutableListOf<Product>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupToolbar()
+        getMyProductList()
+        binding.eFabContinueProductsMyList.setOnClickListener {
+            startActivity(Intent(this, ClientAddressListActivity::class.java))
+        }
+    }
+
+    private fun setupToolbar() {
         binding = ActivityClientProductsMyListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = getString(R.string.my_product_list)
         binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun getMyProductList() {
         val mySharedPreferences = MySharedPreferences(this)
-        if (!mySharedPreferences.getData(Constants.PROP_ORDER).isNullOrEmpty()) {
+        if (!mySharedPreferences.getData(Constants.PROP_ORDER).isNullOrBlank()) {
             val type = object : TypeToken<MutableList<Product>>() {}.type
             listOfProducts =
                 Gson().fromJson(mySharedPreferences.getData(Constants.PROP_ORDER), type)
@@ -39,9 +50,6 @@ class ClientProductsMyListActivity : AppCompatActivity() {
                 adapter = this@ClientProductsMyListActivity.myListAdapter
                 setHasFixedSize(true)
             }
-        }
-        binding.eFabContinueProductsMyList.setOnClickListener {
-            startActivity(Intent(this, ClientAddressListActivity::class.java))
         }
     }
 

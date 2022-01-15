@@ -47,7 +47,7 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_min"
-            android:hint="@string/address"
+            android:hint="@string/tag_address"
             app:counterEnabled="true"
             app:counterMaxLength="50"
             app:startIconDrawable="@drawable/ic_place">
@@ -69,7 +69,7 @@
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             android:layout_marginBottom="@dimen/margin_min"
-            android:hint="@string/suburb"
+            android:hint="@string/tag_suburb"
             app:counterEnabled="true"
             app:counterMaxLength="50"
             app:startIconDrawable="@drawable/ic_location_city">

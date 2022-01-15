@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toStartOf="@id/imgCheck"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/address" />
+            tools:text="@string/tag_address" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvSuburb"
@@ -35,12 +35,13 @@
             app:layout_constraintEnd_toStartOf="@id/imgCheck"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAddress"
-            tools:text="@string/suburb" />
+            tools:text="@string/tag_suburb" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_check"
             android:tint="@color/green_a700"
             android:visibility="gone"

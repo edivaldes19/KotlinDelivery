@@ -1,9 +1,6 @@
 package com.manuel.delivery.activities.delivery.home
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.manuel.delivery.R
@@ -13,7 +10,6 @@ import com.manuel.delivery.fragments.delivery.DeliveryOrdersFragment
 
 class DeliveryHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDeliveryHomeBinding
-    private var isPressed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeliveryHomeBinding.inflate(layoutInflater)
@@ -36,14 +32,7 @@ class DeliveryHomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (isPressed) {
-            finishAffinity()
-        } else {
-            isPressed = true
-            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
-        }
-        val runnable = Runnable { isPressed = false }
-        Handler(Looper.getMainLooper()).postDelayed(runnable, 2000)
+        finishAffinity()
     }
 
     private fun openFragment(fragment: Fragment) {

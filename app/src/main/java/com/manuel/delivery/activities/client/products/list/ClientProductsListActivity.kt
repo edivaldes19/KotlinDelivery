@@ -27,49 +27,42 @@ class ClientProductsListActivity : AppCompatActivity() {
         setContentView(binding.root)
         intent.getStringExtra(Constants.PROP_ID_CATEGORY)?.let { ID_CATEGORY ->
             intent.getStringExtra(Constants.PROP_NAME_CATEGORY)?.let { NAME_CATEGORY ->
+                setupToolbar(NAME_CATEGORY)
                 user = Constants.getUserInSession(this)
-                binding.toolbar.title = NAME_CATEGORY
-                binding.toolbar.setTitleTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.colorOnPrimary
-                    )
-                )
-                setSupportActionBar(binding.toolbar)
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                user?.let { u ->
-                    productsProvider = ProductsProvider(u.sessionToken)
-                    productsProvider.findByCategory(ID_CATEGORY)
-                        ?.enqueue(object : Callback<MutableList<Product>> {
-                            override fun onResponse(
-                                call: Call<MutableList<Product>>,
-                                response: Response<MutableList<Product>>
-                            ) {
-                                response.body()?.let { listOfProducts ->
-                                    productsAdapter =
-                                        ProductsAdapter(
-                                            this@ClientProductsListActivity,
-                                            listOfProducts
-                                        )
-                                    binding.rvProductsList.apply {
-                                        layoutManager =
-                                            GridLayoutManager(this@ClientProductsListActivity, 2)
-                                        adapter = this@ClientProductsListActivity.productsAdapter
-                                        setHasFixedSize(true)
-                                    }
-                                }
-                            }
-
-                            override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
-                                Snackbar.make(
-                                    binding.root,
-                                    getString(R.string.failed_to_get_all_products),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                        })
-                }
+                user?.let { u -> getProducts(u.sessionToken, ID_CATEGORY) }
             }
         }
+    }
+
+    private fun setupToolbar(title: String) {
+        binding.toolbar.title = title
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun getProducts(sessionToken: String?, idCategory: String) {
+        productsProvider = ProductsProvider(sessionToken)
+        productsProvider.findByCategory(idCategory)
+            ?.enqueue(object : Callback<MutableList<Product>> {
+                override fun onResponse(
+                    call: Call<MutableList<Product>>,
+                    response: Response<MutableList<Product>>
+                ) {
+                    response.body()?.let { listOfProducts ->
+                        productsAdapter =
+                            ProductsAdapter(this@ClientProductsListActivity, listOfProducts)
+                        binding.rvProductsList.apply {
+                            layoutManager = GridLayoutManager(this@ClientProductsListActivity, 2)
+                            adapter = this@ClientProductsListActivity.productsAdapter
+                            setHasFixedSize(true)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
+                    Snackbar.make(binding.root, t.message.toString(), Snackbar.LENGTH_SHORT).show()
+                }
+            })
     }
 }

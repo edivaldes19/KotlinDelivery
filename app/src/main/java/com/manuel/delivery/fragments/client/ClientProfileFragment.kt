@@ -71,6 +71,7 @@ class ClientProfileFragment : Fragment() {
     ): View? {
         binding = FragmentClientProfileBinding.inflate(inflater, container, false)
         binding?.let { view ->
+            setupToolbar()
             user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(
                 requireContext(),
@@ -80,14 +81,6 @@ class ClientProfileFragment : Fragment() {
                 view.etSurnames,
                 view.etPhone
             )
-            view.toolbar.title = getString(R.string.profile)
-            view.toolbar.setTitleTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.colorOnPrimary
-                )
-            )
-            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
             return view.root
         }
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -95,6 +88,121 @@ class ClientProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.let { b ->
+            user?.let {
+                setInformationFromModel()
+                b.imgProfile.setOnClickListener {
+                    ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
+                        .createIntent { intent -> resultLauncher.launch(intent) }
+                }
+                b.btnLogout.setOnClickListener { signOff() }
+                b.btnChangeRole.setOnClickListener {
+                    startActivity(Intent(requireContext(), SelectRoleActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    })
+                }
+                b.eFabEditProfile.setOnClickListener { editProfile() }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    private fun setupToolbar() {
+        binding?.let { b ->
+            b.toolbar.title = getString(R.string.profile)
+            b.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorOnPrimary
+                )
+            )
+            (activity as? AppCompatActivity)?.setSupportActionBar(b.toolbar)
+        }
+    }
+
+    private fun signOff() {
+        val mySharedPreferences = MySharedPreferences(requireContext())
+        mySharedPreferences.removeData(Constants.PROP_USER)
+        startActivity(Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+    }
+
+    private fun editProfile() {
+        binding?.let { b ->
+            user?.let { u ->
+                b.eFabEditProfile.isEnabled = false
+                u.apply {
+                    name = b.etName.text.toString().trim()
+                    lastname = b.etSurnames.text.toString().trim()
+                    phone = b.etPhone.text.toString().trim()
+                }
+                file?.let { f ->
+                    usersProvider.update(f, u)
+                        ?.enqueue(object : Callback<ResponseHttp> {
+                            override fun onResponse(
+                                call: Call<ResponseHttp>,
+                                response: Response<ResponseHttp>
+                            ) {
+                                response.body()?.let { responseHttp ->
+                                    if (responseHttp.isSuccess) {
+                                        saveUserSession(responseHttp.data.toString())
+                                        b.eFabEditProfile.isEnabled = true
+                                        Toast.makeText(
+                                            requireContext(),
+                                            responseHttp.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                                b.eFabEditProfile.isEnabled = true
+                                Snackbar.make(
+                                    b.root,
+                                    t.message.toString(),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
+                }
+                usersProvider.updateWithoutImage(u)?.enqueue(object : Callback<ResponseHttp> {
+                    override fun onResponse(
+                        call: Call<ResponseHttp>,
+                        response: Response<ResponseHttp>
+                    ) {
+                        response.body()?.let { responseHttp ->
+                            if (responseHttp.isSuccess) {
+                                saveUserSession(responseHttp.data.toString())
+                                b.eFabEditProfile.isEnabled = true
+                                Toast.makeText(
+                                    requireContext(),
+                                    responseHttp.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
+                        b.eFabEditProfile.isEnabled = true
+                        Snackbar.make(
+                            b.root,
+                            getString(R.string.failed_to_update_user_information),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            }
+        }
+    }
+
+    private fun setInformationFromModel() {
         binding?.let { b ->
             user?.let { u ->
                 usersProvider = UsersProvider(u.sessionToken)
@@ -104,94 +212,8 @@ class ClientProfileFragment : Fragment() {
                 b.etName.setText(u.name.trim())
                 b.etSurnames.setText(u.lastname.trim())
                 b.etPhone.setText(u.phone.trim())
-                b.btnLogout.setOnClickListener {
-                    val mySharedPreferences = MySharedPreferences(requireContext())
-                    mySharedPreferences.removeData(Constants.PROP_USER)
-                    startActivity(Intent(requireContext(), MainActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    })
-                }
-                b.imgProfile.setOnClickListener {
-                    ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
-                        .createIntent { intent -> resultLauncher.launch(intent) }
-                }
-                b.btnChangeRole.setOnClickListener {
-                    startActivity(Intent(requireContext(), SelectRoleActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    })
-                }
-                b.eFabEditProfile.setOnClickListener {
-                    b.eFabEditProfile.isEnabled = false
-                    u.apply {
-                        name = b.etName.text.toString().trim()
-                        lastname = b.etSurnames.text.toString().trim()
-                        phone = b.etPhone.text.toString().trim()
-                    }
-                    file?.let { f ->
-                        usersProvider.update(f, u)
-                            ?.enqueue(object : Callback<ResponseHttp> {
-                                override fun onResponse(
-                                    call: Call<ResponseHttp>,
-                                    response: Response<ResponseHttp>
-                                ) {
-                                    response.body()?.let { responseHttp ->
-                                        if (responseHttp.isSuccess) {
-                                            saveUserSession(responseHttp.data.toString())
-                                            b.eFabEditProfile.isEnabled = true
-                                            Toast.makeText(
-                                                requireContext(),
-                                                responseHttp.message,
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    }
-                                }
-
-                                override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                                    b.eFabEditProfile.isEnabled = true
-                                    Snackbar.make(
-                                        b.root,
-                                        getString(R.string.failed_to_update_user_information),
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-                                }
-                            })
-                    }
-                    usersProvider.updateWithoutImage(u)?.enqueue(object : Callback<ResponseHttp> {
-                        override fun onResponse(
-                            call: Call<ResponseHttp>,
-                            response: Response<ResponseHttp>
-                        ) {
-                            response.body()?.let { responseHttp ->
-                                if (responseHttp.isSuccess) {
-                                    saveUserSession(responseHttp.data.toString())
-                                    b.eFabEditProfile.isEnabled = true
-                                    Toast.makeText(
-                                        requireContext(),
-                                        responseHttp.message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        }
-
-                        override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                            b.eFabEditProfile.isEnabled = true
-                            Snackbar.make(
-                                b.root,
-                                getString(R.string.failed_to_update_user_information),
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
-                }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     private fun saveUserSession(data: String) {

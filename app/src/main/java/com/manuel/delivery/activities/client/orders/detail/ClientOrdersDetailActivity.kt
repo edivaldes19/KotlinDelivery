@@ -1,5 +1,6 @@
 package com.manuel.delivery.activities.client.orders.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -7,6 +8,7 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.manuel.delivery.R
+import com.manuel.delivery.activities.client.orders.map.ClientOrdersMapActivity
 import com.manuel.delivery.adapters.OrderProductsAdapter
 import com.manuel.delivery.databinding.ActivityClientOrdersDetailBinding
 import com.manuel.delivery.models.Order
@@ -23,15 +25,7 @@ class ClientOrdersDetailActivity : AppCompatActivity() {
         intent.getStringExtra(Constants.PROP_ORDER)?.let { e ->
             order = Gson().fromJson(e, Order::class.java)
             order?.let { o ->
-                binding.toolbar.title = getString(R.string.order, o.id)
-                binding.toolbar.setTitleTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.colorOnPrimary
-                    )
-                )
-                setSupportActionBar(binding.toolbar)
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                setupToolbar()
                 ordersProductsAdapter = OrderProductsAdapter(this, o.listOfProducts)
                 with(binding) {
                     rvOrdersDetail.apply {
@@ -64,7 +58,7 @@ class ClientOrdersDetailActivity : AppCompatActivity() {
                         ), HtmlCompat.FROM_HTML_MODE_LEGACY
                     )
                     tvActualStatus.text = HtmlCompat.fromHtml(
-                        getString(R.string.actual_status, o.status.lowercase()),
+                        getString(R.string.actual_status, o.status?.lowercase()),
                         HtmlCompat.FROM_HTML_MODE_LEGACY
                     )
                     var totalPrice = 0.0
@@ -73,8 +67,29 @@ class ClientOrdersDetailActivity : AppCompatActivity() {
                         getString(R.string.detail_total_price, totalPrice),
                         HtmlCompat.FROM_HTML_MODE_LEGACY
                     )
+                    eFabTrackOrder.setOnClickListener {
+                        startActivity(
+                            Intent(
+                                this@ClientOrdersDetailActivity,
+                                ClientOrdersMapActivity::class.java
+                            ).apply { putExtra(Constants.PROP_ORDER, o.toJson()) })
+                    }
                 }
             }
+        }
+    }
+
+    private fun setupToolbar() {
+        with(binding) {
+            toolbar.title = getString(R.string.order, order?.id)
+            toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    this@ClientOrdersDetailActivity,
+                    R.color.colorOnPrimary
+                )
+            )
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }
 }

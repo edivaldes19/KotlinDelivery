@@ -126,24 +126,17 @@ class RestaurantProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRestaurantProductBinding.inflate(inflater, container, false)
-        binding?.let { view ->
+        binding?.let { b ->
+            setupToolbar()
             user = Constants.getUserInSession(requireContext())
             TextWatchers.validateFieldsAsYouType(
                 requireContext(),
-                view.eFabAddProduct,
-                view.etName,
-                view.etDescription,
-                view.etPrice
+                b.eFabAddProduct,
+                b.etName,
+                b.etDescription,
+                b.etPrice
             )
-            view.toolbar.title = getString(R.string.add_product)
-            view.toolbar.setTitleTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.colorOnPrimary
-                )
-            )
-            (activity as? AppCompatActivity)?.setSupportActionBar(view.toolbar)
-            return view.root
+            return b.root
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -151,9 +144,45 @@ class RestaurantProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.let { b ->
+            getCategories()
+            b.eFabAddProduct.setOnClickListener { addProduct() }
+            b.imgProduct1.setOnClickListener {
+                ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
+                    .createIntent { intent -> resultLauncher1.launch(intent) }
+            }
+            b.imgProduct2.setOnClickListener {
+                ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
+                    .createIntent { intent -> resultLauncher2.launch(intent) }
+            }
+            b.imgProduct3.setOnClickListener {
+                ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
+                    .createIntent { intent -> resultLauncher3.launch(intent) }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    private fun setupToolbar() {
+        binding?.let { b ->
+            b.toolbar.title = getString(R.string.add_product)
+            b.toolbar.setTitleTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorOnPrimary
+                )
+            )
+            (activity as? AppCompatActivity)?.setSupportActionBar(b.toolbar)
+        }
+    }
+
+    private fun getCategories() {
+        binding?.let { b ->
             user?.let { u ->
                 categoriesProvider = CategoriesProvider(u.sessionToken)
-                productsProvider = ProductsProvider(u.sessionToken)
                 categoriesProvider.getAll()?.enqueue(object : Callback<MutableList<Category>> {
                     override fun onResponse(
                         call: Call<MutableList<Category>>,
@@ -176,106 +205,92 @@ class RestaurantProductFragment : Fragment() {
                     }
 
                     override fun onFailure(call: Call<MutableList<Category>>, t: Throwable) {
-                        Snackbar.make(
-                            b.root,
-                            getString(R.string.failed_to_get_all_categories),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        Snackbar.make(b.root, t.message.toString(), Snackbar.LENGTH_SHORT).show()
                     }
                 })
-                b.imgProduct1.setOnClickListener {
-                    ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
-                        .createIntent { intent -> resultLauncher1.launch(intent) }
-                }
-                b.imgProduct2.setOnClickListener {
-                    ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
-                        .createIntent { intent -> resultLauncher2.launch(intent) }
-                }
-                b.imgProduct3.setOnClickListener {
-                    ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080)
-                        .createIntent { intent -> resultLauncher3.launch(intent) }
-                }
-                b.eFabAddProduct.setOnClickListener {
-                    b.eFabAddProduct.isEnabled = false
-                    b.pbRestaurantProduct.visibility = View.VISIBLE
-                    val product = Product(
-                        name = b.etName.text.toString().trim(),
-                        description = b.etDescription.text.toString().trim(),
-                        price = b.etPrice.text.toString().trim().toDouble(),
-                        idCategory = categoryId
-                    )
-                    file1?.let { f1 ->
-                        file2?.let { f2 ->
-                            file3?.let { f3 ->
-                                val files = mutableListOf(f1, f2, f3)
-                                productsProvider.create(files, product)
-                                    ?.enqueue(object : Callback<ResponseHttp> {
-                                        override fun onResponse(
-                                            call: Call<ResponseHttp>,
-                                            response: Response<ResponseHttp>
-                                        ) {
-                                            response.body()?.let { responseHttp ->
-                                                if (responseHttp.isSuccess) {
-                                                    file1 = null
-                                                    file2 = null
-                                                    file3 = null
-                                                    with(b) {
-                                                        TextWatchers.clearAllTextFields(
-                                                            etName,
-                                                            etDescription,
-                                                            etPrice
-                                                        )
-                                                        imgProduct1.setImageResource(R.drawable.ic_image_search)
-                                                        imgProduct2.setImageResource(R.drawable.ic_image_search)
-                                                        imgProduct3.setImageResource(R.drawable.ic_image_search)
-                                                        pbRestaurantProduct.visibility = View.GONE
-                                                    }
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        responseHttp.message,
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            }
-                                        }
-
-                                        override fun onFailure(
-                                            call: Call<ResponseHttp>,
-                                            t: Throwable
-                                        ) {
-                                            b.pbRestaurantProduct.visibility = View.GONE
-                                            Snackbar.make(
-                                                b.root,
-                                                getString(R.string.error_adding_product),
-                                                Snackbar.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    })
-                            }
-                        }
-                    }
-                    if (file1 == null || file2 == null || file3 == null) {
-                        b.pbRestaurantProduct.visibility = View.GONE
-                        Snackbar.make(
-                            b.root,
-                            getString(R.string.you_must_capture_or_select_an_image),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                    if (categoryId.isEmpty()) {
-                        Snackbar.make(
-                            b.root,
-                            getString(R.string.you_must_select_a_category),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    private fun addProduct() {
+        binding?.let { b ->
+            user?.let { u ->
+                productsProvider = ProductsProvider(u.sessionToken)
+                b.eFabAddProduct.isEnabled = false
+                b.pbRestaurantProduct.visibility = View.VISIBLE
+                val product = Product(
+                    name = b.etName.text.toString().trim(),
+                    description = b.etDescription.text.toString().trim(),
+                    price = b.etPrice.text.toString().trim().toDouble(),
+                    idCategory = categoryId
+                )
+                file1?.let { f1 ->
+                    file2?.let { f2 ->
+                        file3?.let { f3 ->
+                            val files = mutableListOf(f1, f2, f3)
+                            productsProvider.create(files, product)
+                                ?.enqueue(object : Callback<ResponseHttp> {
+                                    override fun onResponse(
+                                        call: Call<ResponseHttp>,
+                                        response: Response<ResponseHttp>
+                                    ) {
+                                        response.body()?.let { responseHttp ->
+                                            if (responseHttp.isSuccess) {
+                                                file1 = null
+                                                file2 = null
+                                                file3 = null
+                                                with(b) {
+                                                    TextWatchers.clearAllTextFields(
+                                                        etName,
+                                                        etDescription,
+                                                        etPrice
+                                                    )
+                                                    imgProduct1.setImageResource(R.drawable.ic_image_search)
+                                                    imgProduct2.setImageResource(R.drawable.ic_image_search)
+                                                    imgProduct3.setImageResource(R.drawable.ic_image_search)
+                                                    pbRestaurantProduct.visibility =
+                                                        View.GONE
+                                                }
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    responseHttp.message,
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }
+
+                                    override fun onFailure(
+                                        call: Call<ResponseHttp>,
+                                        t: Throwable
+                                    ) {
+                                        b.pbRestaurantProduct.visibility = View.GONE
+                                        Snackbar.make(
+                                            b.root,
+                                            t.message.toString(),
+                                            Snackbar.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                })
+                        }
+                    }
+                }
+                if (file1 == null || file2 == null || file3 == null) {
+                    b.pbRestaurantProduct.visibility = View.GONE
+                    Snackbar.make(
+                        b.root,
+                        getString(R.string.you_must_capture_or_select_an_image),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                if (categoryId.isEmpty()) {
+                    Snackbar.make(
+                        b.root,
+                        getString(R.string.you_must_select_a_category),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }

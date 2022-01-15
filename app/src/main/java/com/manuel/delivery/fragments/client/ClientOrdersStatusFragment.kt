@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.manuel.delivery.R
 import com.manuel.delivery.adapters.OrdersClientAdapter
 import com.manuel.delivery.databinding.FragmentClientOrdersStatusBinding
 import com.manuel.delivery.models.Order
@@ -40,6 +39,15 @@ class ClientOrdersStatusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getOrders()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    private fun getOrders() {
         binding?.let { b ->
             user?.let { u ->
                 status?.let { s ->
@@ -69,19 +77,15 @@ class ClientOrdersStatusFragment : Fragment() {
                                 ) {
                                     Snackbar.make(
                                         b.root,
-                                        getString(R.string.failed_to_get_all_orders),
+                                        t.message.toString(),
                                         Snackbar.LENGTH_SHORT
-                                    ).show()
+                                    )
+                                        .show()
                                 }
                             })
                     }
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }

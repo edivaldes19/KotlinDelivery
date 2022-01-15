@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "951770268937",
+    "project_id": "delivery-94542",
+    "storage_bucket": "delivery-94542.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951770268937:android:7777d834dbdfa932fbffd8",
+        "android_client_info": {
+          "package_name": "com.manuel.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951770268937-o5mqi5p05j6pm9hvr32fu18uoe95ekdd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manuel.delivery",
+            "certificate_hash": "112f8b3ca6da778bf4bfd7529a3ef4cce271af20"
+          }
+        },
+        {
+          "client_id": "951770268937-3hlv2voj34sv9ecc7r1hp12brvle0ofm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuJdPu0tD7_FuisueujXiR_V63g48g26w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951770268937-3hlv2voj34sv9ecc7r1hp12brvle0ofm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

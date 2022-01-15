@@ -20,6 +20,21 @@ class OrdersProvider(private val token: String? = null) {
     fun findByIdClientAndStatus(idClient: String, status: String): Call<MutableList<Order>>? =
         token?.let { t -> ordersRoutes?.findByIdClientAndStatus(idClient, status, t) }
 
+    fun findByIdDeliveryAndStatus(idDelivery: String, status: String): Call<MutableList<Order>>? =
+        token?.let { t -> ordersRoutes?.findByIdDeliveryAndStatus(idDelivery, status, t) }
+
     fun create(order: Order): Call<ResponseHttp>? =
         token?.let { t -> ordersRoutes?.create(order, t) }
+
+    fun upgradeToReady(order: Order): Call<ResponseHttp>? =
+        token?.let { t -> ordersRoutes?.upgradeToReady(order, t) }
+
+    fun upgradeToOnTheWay(order: Order): Call<ResponseHttp>? =
+        token?.let { t -> ordersRoutes?.upgradeToOnTheWay(order, t) }
+
+    fun upgradeToDelivered(order: Order): Call<ResponseHttp>? =
+        token?.let { t -> ordersRoutes?.upgradeToDelivered(order, t) }
+
+    fun updateLatitudeAndLongitude(order: Order): Call<ResponseHttp>? =
+        token?.let { t -> ordersRoutes?.updateLatitudeAndLongitude(order, t) }
 }

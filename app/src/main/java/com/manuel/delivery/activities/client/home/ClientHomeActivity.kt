@@ -11,14 +11,24 @@ import com.manuel.delivery.databinding.ActivityClientHomeBinding
 import com.manuel.delivery.fragments.client.ClientCategoriesFragment
 import com.manuel.delivery.fragments.client.ClientOrdersFragment
 import com.manuel.delivery.fragments.client.ClientProfileFragment
+import com.manuel.delivery.models.User
+import com.manuel.delivery.providers.UsersProvider
+import com.manuel.delivery.utils.Constants
 
 class ClientHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityClientHomeBinding
+    private lateinit var usersProvider: UsersProvider
+    private var user: User? = null
     private var isPressed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityClientHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        user = Constants.getUserInSession(this)
+        user?.let { u ->
+            usersProvider = UsersProvider(u.sessionToken)
+            usersProvider.createToken(u, this, binding.root)
+        }
         openFragment(ClientCategoriesFragment())
         binding.bnClientHome.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

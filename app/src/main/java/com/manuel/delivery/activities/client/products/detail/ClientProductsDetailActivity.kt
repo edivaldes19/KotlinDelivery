@@ -25,71 +25,69 @@ class ClientProductsDetailActivity : AppCompatActivity() {
         binding = ActivityClientProductsDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         intent.getStringExtra(Constants.PROP_PRODUCT)?.let { p ->
-            binding.toolbar.title = getString(R.string.product_detail)
-            binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
-            setSupportActionBar(binding.toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            setupToolbar()
             product = Gson().fromJson(p, Product::class.java)
-            product?.let { prod ->
-                val mySharedPreferences = MySharedPreferences(this)
-                if (!mySharedPreferences.getData(Constants.PROP_ORDER).isNullOrEmpty()) {
-                    val type = object : TypeToken<MutableList<Product>>() {}.type
-                    listOfProducts =
-                        Gson().fromJson(mySharedPreferences.getData(Constants.PROP_ORDER), type)
-                    val index = prod.id?.let { id -> getIndexOf(id) }
-                    index?.let { i ->
-                        if (i != -1) {
-                            with(binding) {
-                                prod.amount = listOfProducts[i].amount
-                                tvAmount.text = "${prod.amount}"
-                                totalPrice = prod.amount * prod.price
-                                tvTotalPrice.text = HtmlCompat.fromHtml(
-                                    getString(R.string.detail_total_price, totalPrice),
-                                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                                )
-                                eFabAddToTheList.text = getString(R.string.update_quantity)
-                            }
-                        }
-                    }
-                }
-                val listOfImages = mutableListOf(
-                    SlideModel(prod.image1, ScaleTypes.CENTER_CROP),
-                    SlideModel(prod.image2, ScaleTypes.CENTER_CROP),
-                    SlideModel(prod.image3, ScaleTypes.CENTER_CROP)
-                )
-                with(binding) {
-                    isProduct.setImageList(listOfImages)
-                    tvName.text = prod.name
-                    tvDescription.text = HtmlCompat.fromHtml(
-                        getString(R.string.description, prod.description),
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
-                    )
-                    tvPrice.text = HtmlCompat.fromHtml(
-                        getString(R.string.price, prod.price),
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
-                    )
-                }
+            product?.let {
+                getProductsFromSharedPreferences()
+                setInformationFromModel()
                 binding.fabSum.setOnClickListener { addProduct() }
                 binding.fabSub.setOnClickListener { removeProduct() }
-                binding.eFabAddToTheList.setOnClickListener {
-                    val index = prod.id?.let { id -> getIndexOf(id) }
-                    index?.let { i ->
-                        if (i == -1) {
-                            if (prod.amount == 0) {
-                                prod.amount = 1
-                            }
-                            listOfProducts.add(prod)
-                        } else {
-                            listOfProducts[i].amount = prod.amount
+                binding.eFabAddToTheList.setOnClickListener { addProductToTheList() }
+            }
+        }
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.title = getString(R.string.product_detail)
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun getProductsFromSharedPreferences() {
+        product?.let { prod ->
+            val mySharedPreferences = MySharedPreferences(this)
+            if (!mySharedPreferences.getData(Constants.PROP_ORDER).isNullOrBlank()) {
+                val type = object : TypeToken<MutableList<Product>>() {}.type
+                listOfProducts =
+                    Gson().fromJson(mySharedPreferences.getData(Constants.PROP_ORDER), type)
+                val index = prod.id?.let { id -> getIndexOf(id) }
+                index?.let { i ->
+                    if (i != -1) {
+                        with(binding) {
+                            prod.amount = listOfProducts[i].amount
+                            tvAmount.text = "${prod.amount}"
+                            totalPrice = prod.amount * prod.price
+                            tvTotalPrice.text = HtmlCompat.fromHtml(
+                                getString(R.string.detail_total_price, totalPrice),
+                                HtmlCompat.FROM_HTML_MODE_LEGACY
+                            )
+                            eFabAddToTheList.text = getString(R.string.update_quantity)
                         }
-                        mySharedPreferences.saveData(Constants.PROP_ORDER, listOfProducts)
-                        Toast.makeText(
-                            this@ClientProductsDetailActivity,
-                            getString(R.string.product_added_successfully),
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
+            }
+        }
+    }
+
+    private fun setInformationFromModel() {
+        product?.let { prod ->
+            val listOfImages = listOf(
+                SlideModel(prod.image1, ScaleTypes.CENTER_CROP),
+                SlideModel(prod.image2, ScaleTypes.CENTER_CROP),
+                SlideModel(prod.image3, ScaleTypes.CENTER_CROP)
+            )
+            with(binding) {
+                isProduct.setImageList(listOfImages)
+                tvName.text = prod.name
+                tvDescription.text = HtmlCompat.fromHtml(
+                    getString(R.string.description, prod.description),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+                tvPrice.text = HtmlCompat.fromHtml(
+                    getString(R.string.price, prod.price),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
             }
         }
     }
@@ -134,6 +132,29 @@ class ClientProductsDetailActivity : AppCompatActivity() {
                     fabSub.isEnabled = false
                     fabSum.isEnabled = true
                 }
+            }
+        }
+    }
+
+    private fun addProductToTheList() {
+        product?.let { prod ->
+            val mySharedPreferences = MySharedPreferences(this)
+            val index = prod.id?.let { id -> getIndexOf(id) }
+            index?.let { i ->
+                if (i == -1) {
+                    if (prod.amount == 0) {
+                        prod.amount = 1
+                    }
+                    listOfProducts.add(prod)
+                } else {
+                    listOfProducts[i].amount = prod.amount
+                }
+                mySharedPreferences.saveData(Constants.PROP_ORDER, listOfProducts)
+                Toast.makeText(
+                    this@ClientProductsDetailActivity,
+                    getString(R.string.product_added_successfully),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

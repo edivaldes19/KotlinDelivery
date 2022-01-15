@@ -1,6 +1,5 @@
 package com.manuel.delivery.activities.client.address.create
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -29,8 +28,6 @@ class ClientAddressCreateActivity : AppCompatActivity() {
     private var user: User? = null
     private var addressLat = 0.0
     private var addressLng = 0.0
-
-    @SuppressLint("SetTextI18n")
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -40,7 +37,7 @@ class ClientAddressCreateActivity : AppCompatActivity() {
                 val country = data?.getStringExtra(Constants.PROP_COUNTRY)
                 data?.getDoubleExtra(Constants.PROP_LATITUDE, 0.0)?.let { lat -> addressLat = lat }
                 data?.getDoubleExtra(Constants.PROP_LONGITUDE, 0.0)?.let { lng -> addressLng = lng }
-                binding.etReference.setText("$address $city $country")
+                "$address $city $country".also { rp -> binding.etReference.setText(rp) }
             }
         }
 
@@ -48,12 +45,9 @@ class ClientAddressCreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityClientAddressCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupToolbar()
         user = Constants.getUserInSession(this)
         user?.let { u ->
-            binding.toolbar.title = getString(R.string.new_address)
-            binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
-            setSupportActionBar(binding.toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             addressProvider = AddressProvider(u.sessionToken)
             TextWatchers.validateFieldsAsYouType(
                 this,
@@ -64,52 +58,63 @@ class ClientAddressCreateActivity : AppCompatActivity() {
             binding.etReference.setOnClickListener {
                 resultLauncher.launch(Intent(this, ClientAddressMapActivity::class.java))
             }
-            binding.eFabContinueAddressCreate.setOnClickListener {
-                if (!binding.etReference.text.isNullOrEmpty()) {
-                    if (addressLat != 0.0 && addressLng != 0.0) {
-                        val address = Address(
-                            idUser = u.id,
-                            address = binding.etAddress.text.toString().trim(),
-                            suburb = binding.etSuburb.text.toString().trim(),
-                            latitude = addressLat,
-                            longitude = addressLng
-                        )
-                        addressProvider.create(address)?.enqueue(object : Callback<ResponseHttp> {
-                            override fun onResponse(
-                                call: Call<ResponseHttp>,
-                                response: Response<ResponseHttp>
-                            ) {
-                                response.body()?.let { responseHttp ->
-                                    startActivity(
-                                        Intent(
-                                            this@ClientAddressCreateActivity,
-                                            ClientAddressListActivity::class.java
-                                        )
-                                    )
-                                    Toast.makeText(
-                                        this@ClientAddressCreateActivity,
-                                        responseHttp.message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
+            binding.eFabContinueAddressCreate.setOnClickListener { addAddress() }
+        }
+    }
 
-                            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {}
-                        })
-                    } else {
-                        Snackbar.make(
-                            binding.root,
-                            getString(R.string.error_getting_latitude_and_longitude),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
+    private fun setupToolbar() {
+        binding.toolbar.title = getString(R.string.new_address)
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorOnPrimary))
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun addAddress() {
+        user?.let { u ->
+            if (!binding.etReference.text.isNullOrBlank()) {
+                if (addressLat != 0.0 && addressLng != 0.0) {
+                    val address = Address(
+                        idUser = u.id,
+                        address = binding.etAddress.text.toString().trim(),
+                        suburb = binding.etSuburb.text.toString().trim(),
+                        latitude = addressLat,
+                        longitude = addressLng
+                    )
+                    addressProvider.create(address)?.enqueue(object : Callback<ResponseHttp> {
+                        override fun onResponse(
+                            call: Call<ResponseHttp>,
+                            response: Response<ResponseHttp>
+                        ) {
+                            response.body()?.let { responseHttp ->
+                                startActivity(
+                                    Intent(
+                                        this@ClientAddressCreateActivity,
+                                        ClientAddressListActivity::class.java
+                                    )
+                                )
+                                Toast.makeText(
+                                    this@ClientAddressCreateActivity,
+                                    responseHttp.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {}
+                    })
                 } else {
                     Snackbar.make(
                         binding.root,
-                        getString(R.string.you_must_select_a_landmark),
+                        getString(R.string.error_getting_latitude_and_longitude),
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.you_must_select_a_landmark),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
     }

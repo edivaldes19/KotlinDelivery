@@ -38,6 +38,7 @@
                 android:layout_height="@dimen/category_image_size_height"
                 android:layout_margin="@dimen/margin_default"
                 android:background="?attr/selectableItemBackground"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_image_search"
                 app:layout_constraintBottom_toTopOf="@id/tilEmail"
                 app:layout_constraintEnd_toEndOf="parent"

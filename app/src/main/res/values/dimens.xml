@@ -6,6 +6,7 @@
     <dimen name="margin_max">24dp</dimen>
     <dimen name="role_image_size">100dp</dimen>
     <dimen name="profile_image_size">125dp</dimen>
+    <dimen name="profile_small_image_size">50dp</dimen>
     <dimen name="product_image_size">100dp</dimen>
     <dimen name="profile_view_height">175dp</dimen>
     <dimen name="category_image_size_width">250dp</dimen>
@@ -13,5 +14,6 @@
     <dimen name="my_list_view_size_height">150dp</dimen>
     <dimen name="product_stroke">1dp</dimen>
     <dimen name="view_height">3dp</dimen>
+    <dimen name="view_height_small">1dp</dimen>
     <dimen name="image_order_products_size">75dp</dimen>
 </resources>

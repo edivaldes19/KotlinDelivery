@@ -51,13 +51,15 @@
             android:clickable="false"
             android:focusable="false"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:text="@string/unknown" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgMyLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_my_location"
         android:tint="@color/red_a700"
         app:layout_constraintBottom_toBottomOf="@id/map"
@@ -67,7 +69,7 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/eFabConfirmAddressMap"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_default"
         android:text="@string/accept"
@@ -77,5 +79,6 @@
         app:icon="@drawable/ic_check"
         app:iconTint="@color/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@id/map"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
